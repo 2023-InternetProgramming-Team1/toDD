@@ -1,0 +1,79 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main_area %}
+
+    <div class="row my-4" style="font-size:50px;">
+        ADD YOUR LIST!
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <!--할 일 입력-->
+        <div style="background-color: #FFF7D3; border-radius: 110px;" class="row my-2 py-5 col px-5 mx-5">
+            <div class="row">
+                <div class="col-md-1">
+                    <div style="font-size:25px;" class="row py-3 col ps-3">
+                        <b>제목</b>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div style="background-color: #FFFFF4; border-radius: 50px; font-size:25px;" class="row py-3 col px-4 ms-2">
+                        <!--{{ form.title }}-->
+                        <input style="background-color: #FFFFF4;" type="text" name="form.title" class="form-control border-0" placeholder="제목 입력">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <span> </span>
+                </div>
+
+                <div class="col-md-1">
+                    <span> </span>
+                </div>
+                <div class="col-md-10">
+                    <div style="font-size:20px;" class="rounded-5 row my-3 col mx-5">
+                        <!--{{ form.content }}-->
+                        <textarea cols="150" rows="10" style="background-color: #FFF7D3;" name="form.content" class="form-control border-0" placeholder="내용 입력"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--마감 기한 입력-->
+        <div class="row my-4 col mx-5">
+            <div class="row">
+                <div class="col-md-7">
+                    <div style="background-color: #FFEC9D; border: 8px solid #FFEC9D; border-radius: 50px;" class="row py-2 col px-5">
+                        <input type="datetime-local" autocomplete="current_####" name="deadline" class="form-control border-0 col px-3" style="background-color: #FFEC9D;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <span style="font-size:25px;" class="row py-3 col ms-2 ps-5">When is the deadline?</span>
+                </div>
+            </div>
+        </div>
+        <br>
+
+
+        <!--버튼-->
+        <div class="row">
+            <div class="row my-2 col mx-5">
+                <div class="col-md-9"></div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="background-color: #2D3142; border:5px solid #2D3142; border-radius: 50px;" class="row py-1 col ms-3">
+                                <input style="background-color: #2D3142; text-align:center; font-size: 30px; color: #FFFFFF; border-radius: 50px;" type="submit" id="save" class="form-control border-0" value="SAVE" onclick="#">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="background-color: #FFFFF4; border: 5px solid #2D3142; border-radius: 50px;" class="row py-1 col ms-3">
+                                <input style="background-color: #FFFFF4; text-align:center; font-size: 30px; color: #2D3142; border-radius: 50px;" type="button" id="exit" class="form-control border-0" value="EXIT" onclick="#">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
