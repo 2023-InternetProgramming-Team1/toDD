@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join/login</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="{% static 'join/bootstrap/bootstrap.min.css' %}"
+            rel="stylesheet"
+            media="screen"
+        />
+        <script
+            src="https://kit.fontawesome.com/726bbd6862.js"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="{% static 'css/login.css' %}"
+            rel="stylesheet"
+            media="screen"
+        />
+
+</head>
+<body>
+
+    <!-- 로고와 로그인 폼을 포함하는 컨테이너 -->
+    <div class="container">
+        <!-- 로고 추가 -->
+        <img class="logo" src="{% static 'img/logo.png' %}" alt="로고">
+
+        <!-- 로그인 폼 추가 -->
+        <div class="login-container">
+
+            <input type="text" id="studentId" name="studentId" placeholder="학번">
+
+            <input type="password" id="password" name="password" placeholder="비밀번호">
+<!--            url 추가하기-->
+            <button type="button" onclick="login()" id="button">로그인</button>
+        </div>
+
+        <p class="white-text">-------------------------- 또는 --------------------------</p>
+        <p class="have">계정이 없으신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/join/account/"><span class="make">계정 만들기</span></a></p>
+    </div>
+
+    <script>
+        function login() {
+
+            alert("로그인 버튼이 클릭되었습니다.");
+            var studentId = document.getElementById('studentId').value;
+            var password = document.getElementById('password').value;
+
+            //사용자명이 'user'이고 비밀번호가 'password'인 경우에만 성공임
+            if (studentId === 'studentId' && password === 'password') {
+                document.getElementById('result').innerText = '로그인 성공!';
+            } else {
+                document.getElementById('result').innerText = '로그인 실패. 사용자명 또는 비밀번호를 확인하세요.';
+            }
+        }
+    </script>
+
+</body>
+</html>
