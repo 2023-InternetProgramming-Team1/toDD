@@ -65,13 +65,13 @@
                             <img
                             src="{% static 'img/home_complete.png' %}"
                             id="todoIcon"
-                            onclick="{{ p.todo_incom }}"
+                            onclick="console.log('Image clicked!'); incompleteTask({{ p.pk }})"
                             />
                         {% else %}
                             <img
                                 src="{% static 'img/home_incom.png' %}"
                                 id="todoIcon"
-                                onclick="{{ p.todo_incom }}"
+                                onclick="console.log('Image clicked!'); completeTask({{ p.pk }})"
                             />
                         {% endif %}
                         <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:9 }}</a>
