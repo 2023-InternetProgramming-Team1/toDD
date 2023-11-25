@@ -118,62 +118,61 @@
     </nav>
 
         <!-- 페이지 내용 작성-->
-        <div class="container my-4">
-            <div class="main-container">
-                <div>
-                    <img src="{% static 'img/my.png' %}" alt="Person Image" class="registration-image">
-                </div>
-                <div class="registration-box">
-                    <div class="registration-container">
-                        <div class="r-group">
-                            <img src="{% static 'img/dot.png' %}" alt="dot" class="g-dot">
-                            <label for="username">이름을 입력하시오.</label>
-                            <input type="text" id="username" name="username" placeholder="      이름을 입력하시오.">
-                         </div>
-                        <div class="r-group">
-                            <img src="{% static 'img/dot.png' %}" alt="dot" class="g-dot">
-                    <label for="studentId">학번을 입력하시오.</label>
-                    <input type="password" id="studentId" name="studentId" placeholder="      학번을 입력하시오.">
-                        </div>
-                        <div class="r-group">
-                            <img src="{% static 'img/dot.png' %}" alt="dot" class="g-dot">
-                    <label for="password">비밀번호를 입력하시오.</label>
-                    <input type="password" id="password" name="password" placeholder="      비밀번호를 입력하시오.">
+    <div class="container my-4">
+        <div class="main-container">
+            <div>
+                <img src="{% static 'img/my.png' %}" alt="Person Image" class="registration-image">
+            </div>
+            <div class="registration-box">
+                <div class="registration-container">
+                    <div class="r-group">
+                        <img src="{% static 'img/dot.png' %}" alt="dot" class="g-dot">
+                        <label for="username">이름을 입력하시오.</label>
+                        <input type="text" id="username" name="username" placeholder="      이름을 입력하시오.">
                     </div>
+                    <div class="r-group">
+                        <img src="{% static 'img/dot.png' %}" alt="dot" class="g-dot">
+                        <label for="studentId">학번을 입력하시오.</label>
+                        <input type="password" id="studentId" name="studentId" placeholder="      학번을 입력하시오.">
                     </div>
-                </div>
-
-                <div id="submitButton" onclick="submitForm()">
-                    <a href="/join/login/"><img src="{% static 'img/save.png' %}" alt="Save Image"></a>
+                    <div class="r-group">
+                        <img src="{% static 'img/dot.png' %}" alt="dot" class="g-dot">
+                        <label for="password">비밀번호를 입력하시오.</label>
+                        <input type="password" id="password" name="password" placeholder="      비밀번호를 입력하시오.">
+                    </div>
                 </div>
             </div>
+
+            <div id="submitButton" onclick="submitForm()">
+                <a href="/join/login/"><img src="{% static 'img/save.png' %}" alt="Save Image"></a>
+            </div>
         </div>
-
-        <script>
-        function submitForm() {
-            var username = document.getElementById("username").value;
-            var studentId = document.getElementById("studentId").value;
-            var password = document.getElementById("password").value;
-
-            console.log("이름: " + username);
-            console.log("학번: " + studentId);
-            console.log("비밀번호: " + password);
-
-            alert('가입되었습니다!');
-        }
-        </script>
-        <!-- Footer -->
-        <footer class="py-2 mt-auto" style="background-color: #2d3142">
-    <div class="container d-flex justify-content-center" style="text-align: center">
-        <a
-            class="m-0 text-center"
-            style="color: #fffff4; text-decoration: none"
-            href="#"
-        >
-            Copyright &copy; ITZYMA 2023
-        </a>
     </div>
-</footer>
+
+    <script>
+    function submitForm() {
+        var username = document.getElementById("username").value;
+        var studentId = document.getElementById("studentId").value;
+        var password = document.getElementById("password").value;
+
+        console.log("이름: " + username);
+        console.log("학번: " + studentId);
+        console.log("비밀번호: " + password);
+
+        alert('가입되었습니다!');
+    }
+    </script>
+    <!-- Footer -->
+        <footer class="py-2 mt-auto" style="background-color: #2d3142">
+            <div class="container d-flex justify-content-center" style="text-align: center">
+                <a class="m-0 text-center"
+                   style="color: #fffff4; text-decoration: none"
+                   href="#"
+                >
+                    Copyright &copy; ITZYMA 2023
+                </a>
+            </div>
+        </footer>
 
         <script
             src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
