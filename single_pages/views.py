@@ -5,3 +5,10 @@ def landing(request):
         request,
         'single_pages/start.html'
     )
+
+
+def about_us(request):
+    return render(
+        request,
+        'single_pages/about_us.html'
+    )

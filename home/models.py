@@ -30,4 +30,4 @@ class Post(models.Model):
         return f'[{self.pk}] {self.title}'
 
     def get_absolute_url(self):
-        return f'check_details_{self.pk}/'
+        return f'../../home/check_details_{self.pk}/'

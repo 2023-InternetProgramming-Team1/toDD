@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
+
+from .forms import PostForm
 from .models import Post, Category
 from django.http import JsonResponse
 
@@ -73,6 +75,38 @@ class PostDetail(DetailView):
     model = Post
 
 
-class PostCreate(CreateView):
-    model = Post
-    fields = ['title', 'content', 'deadline']
+def postCreate(request):
+    if request.method == "POST":  # 데이터를 저장해야할때
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = Post()
+            post.title = form.cleaned_data['title']
+            post.content = form.cleaned_data['content']
+            post.deadline = form.cleaned_data['deadline']
+            post.save()
+            return redirect(post)
+    else:  # 입력 양식을 보여줘야 할때
+        form = PostForm()
+    return render(request, 'home/post_form.html', {
+        'form': form
+    })
+
+
+def postEdit(request, pk):
+    post = Post.objects.get(id=pk)
+    if request.method == "POST": # 글을 수정사항을 입력하고 제출을 눌렀을 때
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post.title = form.cleaned_data['title']
+            post.content = form.cleaned_data['content']
+            post.deadline = form.cleaned_data['deadline']
+            post.save()
+        return redirect(post)
+    else: # 수정사항을 입력하기 위해 페이지에 처음 접속했을 때
+        form = PostForm(instance=post)
+        context = {
+            'form': form,
+            'writing': True,
+            'now': 'edit',
+        }
+    return render(request, 'home/edit_post_form.html', context)
