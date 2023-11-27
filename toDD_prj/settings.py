@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'eclass',
     'join',
+    'single_pages',
 ]
 
 MIDDLEWARE = [

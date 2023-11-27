@@ -45,40 +45,21 @@
     <div class="col-8 mt-3 mb-5">
         <div class="listBox">
             <div class="controll">
-                <a href="#" id="before"
-                    ><img
-                        src="{% static 'img/home_before.png' %}"
-                        style="width: 40px"
-                /></a>
-                <div id="date" style="font-weight: 700;">2023.11.18 (토)</div>
-                <a href="#" id="after"
-                    ><img
-                        src="{% static 'img/home_after.png' %}"
-                        style="width: 40px"
-                /></a>
+
+                <div id="date" style="font-weight: 700;">{{ category }}</div>
+
             </div>
             <div class="todoBox">
                 {% if post_list.exists %}
                     {% for p in post_list %}
-                    <div class="todo" style="margin-bottom:10px">
-                        {% if p.complete %}
-                            <img
-                            src="{% static 'img/home_complete.png' %}"
+                    <a class="todo" href="{{ p.get_absolute_url }}" style="text-decoration: none; margin-bottom:10px">
+                        <img
+                            src="{% static 'img/home_incom.png' %}"
                             id="todoIcon"
-                            onclick="console.log('Image clicked!'); incompleteTask({{ p.pk }})"
-                            />
-                        {% else %}
-                            <img
-                                src="{% static 'img/home_incom.png' %}"
-                                id="todoIcon"
-                                onclick="console.log('Image clicked!'); completeTask({{ p.pk }})"
-                            />
-                        {% endif %}
-                        <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:9 }}</a>
-                        <div id="todoDeadline">
-                            ({{ p.deadline|timeuntil }})
-                        </div>
-                    </div>
+                        />
+                        <div id="todoTitle" style="color: #2D3142;">{{ p.title | truncatechars:9 }}</div>
+                        <div id="todoDeadline">( {{ p.deadline }})</div>
+                    </a>
 
                     {% endfor %}
                 {% else %}

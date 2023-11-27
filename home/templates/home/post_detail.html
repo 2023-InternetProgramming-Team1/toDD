@@ -2,7 +2,7 @@
 {% load static %}
 {% block main_area %}
 
-    <div class="row my-4" style="font-size:50px;">
+<div class="row my-2" style="font-size:50px;" xmlns="http://www.w3.org/1999/html">
         CHECK LIST DETAILS!
     </div>
 
@@ -12,18 +12,25 @@
             <div class="row">
                 <div class="col-md-1">
                     <div class="row my-1 py-2 col px-1">
-                        <button type="button" class="btm_image border-0" id="box" style="background-color: #FFF7D3;">
+                        <button type="button" class="btm_image border-0" id="box" style="background-color: #FFF7D3;  height: 100%; width: 80%;">
                             <img src="{% static 'img/home_incom.png' %}" width="50px" height="50px" alt="incom">
                         </button>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div style="background-color: #FFFFF4; border: 3px solid #2D3142; border-radius: 50px; font-size:25px;" class="row py-3 col px-5">
-                        <b>{{ post_list.title }} 제목 출력</b>
+                    <div style="background-color: #FFFFF4; border: 3px solid #2D3142; border-radius: 50px; font-size:25px;" class="row py-3 col px-4">
+                        <b>{{ post.title }}</b>
                     </div>
-                    <div style="font-size:20px;" class="rounded-5 row my-5 col mx-5 px-1">
-                        {{ post_list.content }} 내용 출력
-                        <br><br><br><br><br><br><br>
+                    <div style="font-size:20px; height: 300px; width: 100%;" class="rounded-5 row mt-5 mb-2 py-1 col mx-5 px-1">
+                        {{ post.content }}
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-1">
+                    <div class="row pt-2 col pe-3">
+                        <a href="{% url 'postDelete' post.id %}" role="button">
+                            <img src="{% static 'img/delete_icon.png' %}" width="90%" height="90%" alt="delete">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -35,9 +42,10 @@
         <div class="row my-2 col mx-5">
             <!--마감 기한 출력-->
             <div class="col-md-8">
-                <div style="background-color: #FFEC9D; border: 8px solid #FFEC9D; border-radius: 50px; font-size:20px;" class="row py-2 col px-5">
-                    <span><!--{{ post_list.deadline_yy }}-->2023년 <!--{{ post_list.deadline_mm }}-->00월 <!--{{ post_list.deadline_mm }}-->00일
-                        <!--{{ post_list.deadline_mm }}-->00시 <!--{{ post_list.deadline_mm }}-->00분까지</span>
+                <div style="background-color: #FFEC9D; border: 8px solid #FFEC9D; border-radius: 50px; font-size:20px;" class="row pt-3 col px-5">
+                    <p><b><span style="color: #E71D36">DeadLine:&nbsp;&nbsp;</span>{{ post.deadline.year }}년 {{ post.deadline.month }}월 {{ post.deadline.day }}일&nbsp;&nbsp;{{ post.deadline.hour }}시 {{ post.deadline.minute }}분까지</b>
+                        <span style="color:gray; text-align:end;">(24시간 단위)</span></p>
+                    <!--  {{ post.deadline.second }}초 -->
                 </div>
             </div>
 
@@ -48,14 +56,18 @@
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-6">
-                        <div style="background-color: #2D3142; border:5px solid #2D3142; border-radius: 50px;" class="row py-1 col ms-3">
-                            <input style="background-color: #2D3142; text-align:center; font-size: 30px; color: #FFFFFF; border-radius: 50px;" type="submit" id="edit" class="form-control border-0" value="EDIT">
-                        </div>
+                        <a href="../edit_list_{{ post.pk }}/" style="text-decoration: none;">
+                            <div style="background-color: #2D3142; border:5px solid #2D3142; border-radius: 50px;" class="col ms-3">
+                                <input style="background-color: #2D3142; text-align:center; font-size: 30px; color: #FFFFFF; border-radius: 50px;" type="button" id="edit" class="form-control border-0" value="EDIT">
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-6">
-                        <div style="background-color: #FFFFF4; border: 5px solid #2D3142; border-radius: 50px;" class="row py-1 col ms-3">
-                            <input style="background-color: #FFFFF4; text-align:center; font-size: 30px; color: #2D3142; border-radius: 50px;" type="button" id="exit" class="form-control border-0" value="EXIT">
-                        </div>
+                        <a href="../" style="text-decoration: none;">
+                            <div style="background-color: #FFFFF4; border: 5px solid #2D3142; border-radius: 50px;" class="col ms-3">
+                                <input style="background-color: #FFFFF4; text-align:center; font-size: 30px; color: #2D3142; border-radius: 50px;" type="button" id="exit" class="form-control border-0" value="EXIT">
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
