@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 
 from .forms import PostForm
 from .models import Post, Category
 from django.http import JsonResponse
+
 
 
 def todo_complete(request, pk):
@@ -110,3 +111,10 @@ def postEdit(request, pk):
             'now': 'edit',
         }
     return render(request, 'home/edit_post_form.html', context)
+
+
+def postDelete(request, pk):
+    post = Post.objects.get(id=pk)
+    post.delete()
+    return redirect('../../home/')
+
