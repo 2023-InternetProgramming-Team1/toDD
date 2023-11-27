@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'eclass',
+    'alarm',
     'join',
     'single_pages',
 ]
