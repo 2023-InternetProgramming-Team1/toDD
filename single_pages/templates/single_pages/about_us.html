@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <title>HOME</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="{% static 'home/bootstrap/bootstrap.min.css' %}"
+            rel="stylesheet"
+            media="screen"
+        />
+        <script
+            src="https://kit.fontawesome.com/726bbd6862.js"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="{% static 'css/post_list.css' %}"
+            rel="stylesheet"
+            media="screen"
+        />
+    </head>
+    <body
+        class="d-flex flex-column min-vh-100"
+        style="
+            background-color: #fffff4;
+            color: #2d3142;
+            font-family: 'Inter', sans-serif;
+        "
+    >
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #2D3142;">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/logo.png' %}" alt="Bootstrap" width="130.22" height="50">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active ms-3">
+                            <a class="navbar-brand" href="#" style="color: #FFFFF4;">
+                                <img src="{% static 'img/nav_home.png' %}" alt="HOME" width="25" height="25" class="d-inline-block align-text-top me-1">
+                                HOME
+                            </a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="navbar-brand" href="#" style="color: #FFFFF4;">
+                                <img src="{% static 'img/nav_my.png' %}" alt="MY" width="25" height="25" class="d-inline-block align-text-top me-1">
+                                MY
+                            </a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="navbar-brand" href="#" style="color: #FFFFF4;">
+                                <img src="{% static 'img/nav_eclass.png' %}" alt="ECLASS" width="25" height="25" class="d-inline-block align-text-top me-1">
+                                E-CLASS
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown ms-2">
+                            <a class="navbar-brand" href="#" style="color: #FFFFF4;">
+                                <img src="{% static 'img/nav_login.png' %}" alt="LOGIN" width="25" height="25" class="d-inline-block align-text-top me-1">
+                                LOG IN
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <img src="{% static 'img/nav_alarm.png' %}" alt="Bootstrap" width="23" height="25">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 페이지 내용 작성-->
+        <div>
+            <!--LOGO IMG-->
+            <div class="col">
+                <div class="row">
+                    <div class="col-md-2"><span> </span></div>
+                    <div class="col-md-8">
+                        <div class="row my-5 py-5 col px-5 mx-5">
+                            <div style="background-color: #2D3142;" class="rounded-5 row my-2 py-5 col px-5 mx-5">
+                                <img src="{% static 'img/start_logo.png' %}" class="img-fluid" alt="toDD LOGO">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--WHAT SERVICE IS toDD?-->
+            <div class="col">
+                <div style="background-color: #FFF7D3; border-radius: 70px; text-align: center;" class="row my-4 py-5 col px-5 mx-5">
+                    <div class="col-md-2"><span> </span></div>
+                    <div class="col-md-8">
+                        <div style="background-color: #FFEC9D; font-size: 35px;" class="rounded-5 row my-5 py-5 col mx-5">
+                            <span>
+                                <b>WHAT SERVICE IS toDD?</b>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2"><span> </span></div>
+
+                    <div class="row">
+                        <div class="col-md-3"><span> </span></div>
+                        <div class="col-md-6">
+                            <div class="row my-5 col mx-5">
+                                <img src="{% static 'img/muhandojenZZAL.gif' %}" class="img-fluid" alt="이제는 더이상 물러날 곳이 없다">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="font-size:25px;" class="row mb-5 pb-5">
+                        <span>이제는! 더이상! 물러날 곳이 없! 다!</span>
+                        <br>
+                        <span>공부 + 과제 + 대외활동 + 알바 ...</span>
+                        <br>
+                        <span>한없이 바쁜 덕우들을 위해,</span>
+                        <br>
+                        <span><b>toDD</b>가</span>
+                        <br>
+                        <span>확실하고 편리한</span>
+                        <br>
+                        <span>과제 제출을 도와드려요.</span>
+                        <br><br>
+                        <span>이클래스 기반</span>
+                        <br>
+                        <span>투두 리스트 서비스 <b>toDD</b>로</span>
+                        <br>
+                        <span>슬기로운 덕성 생활 시작해요!</span>
+                        <br>
+                    </div>
+
+
+
+                    <!--WHO MADE THIS?-->
+                    <div class="col-md-2"><span> </span></div>
+                    <div class="col-md-8">
+                        <div style="background-color: #FFEC9D; font-size: 35px;" class="rounded-5 row my-5 py-5 col mx-5">
+                            <span style="text-align: center;">
+                                <b>WHO MADE THIS?</b>
+                            </span>
+                        </div>
+                        <div class="row my-5 py-3 col mx-5">
+                            <span style="font-size: 50px; color: #FF0000;"><b>ITZYMA</b></span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="row pt-1 pb-5 mb-5">
+                                <div class="col-md-1"><span> </span></div>
+                                <div style="font-size: 30px;" class="col-md-2">
+                                    <div>
+                                        <img src="{% static 'img/goboyeong.png' %}" class="img-fluid" alt="고보영">
+                                        <br>
+                                        <span><b>고보영</b></span>
+                                    </div>
+                                </div>
+                                <div style="font-size: 30px;" class="col-md-2">
+                                    <div>
+                                        <img src="{% static 'img/kimsihyeon.png' %}" class="img-fluid" alt="김시현">
+                                        <br>
+                                        <span><b>김시현</b></span>
+                                    </div>
+                                </div>
+                                <div style="font-size: 30px;" class="col-md-2">
+                                    <div>
+                                        <img src="{% static 'img/jangseoen.png' %}" class="img-fluid" alt="장서은">
+                                        <br>
+                                        <span><b>장서은</b></span>
+                                    </div>
+                                </div>
+                                <div style="font-size: 30px;" class="col-md-2">
+                                    <div>
+                                        <img src="{% static 'img/yunyunji.png' %}" class="img-fluid" alt="윤윤지">
+                                        <br>
+                                        <span><b>윤윤지</b></span>
+                                    </div>
+                                </div>
+                                <div style="font-size: 30px;" class="col-md-2">
+                                    <div>
+                                        <img src="{% static 'img/jeonghaein.png' %}" class="img-fluid" alt="정해인">
+                                        <br>
+                                        <span><b>정해인</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="py-2 mt-auto" style="background-color: #2d3142">
+            <div class="container" style="text-align: center" ;>
+                <a
+                    class="m-0 text-center"
+                    style="color: #fffff4; text-decoration: none"
+                    href="#"
+                >
+                    Copyright &copy; ITZYMA 2023
+                </a>
+            </div>
+        </footer>
+
+
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
