@@ -1,7 +1,6 @@
 from django import forms
 from .models import Post
 
-
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -28,5 +27,4 @@ class PostForm(forms.ModelForm):
                     'style': 'background-color: #FFEC9D;',
                 }),
         }
-
 

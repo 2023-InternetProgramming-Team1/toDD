@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'eclass',
     'alarm',
+    'eclass',
     'join',
     'single_pages',
 ]
