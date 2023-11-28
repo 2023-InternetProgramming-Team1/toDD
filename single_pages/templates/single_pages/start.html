@@ -10,7 +10,7 @@
             rel="stylesheet"
         />
         <link
-            href="{% static 'home/bootstrap/bootstrap.min.css' %}"
+            href="{% static 'single_pages/bootstrap/bootstrap.min.css' %}"
             rel="stylesheet"
             media="screen"
         />
@@ -18,28 +18,45 @@
             src="https://kit.fontawesome.com/726bbd6862.js"
             crossorigin="anonymous"
         ></script>
-        <link
-            href="{% static 'css/post_list.css' %}"
-            rel="stylesheet"
-            media="screen"
-        />
+        <style>
+            #slogun {
+                width: 60%;
+                margin-top: 7%;
+                margin-bottom: 1%;
+            }
+
+            #logo {
+                margin-bottom: 3%;
+                width: 35%
+            }
+
+            #btn {
+                border-radius: 50px;
+                background: #FFEC9D;
+                color: #2d3142;
+                width: 15%;
+                height: 70px;
+                font-weight: 900;
+                font-size: 40px;
+                text-decoration: none;
+                text-align: center;
+                padding-top: 5px
+            }
+            #btn:hover {
+                background: #E3D288;
+            }
+        </style>
     </head>
     <body
-        class="d-flex flex-column min-vh-100"
+        class="d-flex flex-column min-vh-100 align-items-center"
         style="
-            background-color: #fffff4;
-            color: #2d3142;
+            background-color: #2d3142;
             font-family: 'Inter', sans-serif;
-        "
-    >
-        <!-- NavBar -->
-        {% include 'home/nav.html' %}
+            margin: 0">
 
-        <!-- 페이지 내용 작성-->
-        <div class="container my-4">{% block main_area %} {% endblock %}</div>
-
-        <!-- Footer -->
-        {% include 'home/footer.html' %}
+        <img id="slogun" src="{% static 'img/start_slogun.png' %}">
+        <img id="logo" src="{% static 'img/start_logo.png' %}">
+        <a href="/home" id="btn">START</a>
 
 
         <script

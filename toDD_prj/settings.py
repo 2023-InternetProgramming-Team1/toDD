@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'alarm',
     'eclass',
     'join',
+    'single_pages',
 ]
 
 MIDDLEWARE = [
