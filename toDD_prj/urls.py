@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('eclass/', include('eclass.urls')),
     path('join/', include('join.urls')),
+    path('alarm/', include('alarm.urls')),
     path('', include('single_pages.urls')),
 ]
 

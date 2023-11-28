@@ -12,12 +12,19 @@ def todo_check(request, pk):
     print(f'Todo with ID {pk} updated: complete={todo.complete}')
     return redirect('post_list')
 
+def todo_check_category(request, pk, slug):
+    category = get_object_or_404(Category, slug=slug)
+    todo = get_object_or_404(Post, pk=pk)
+    todo.complete = not todo.complete
+    todo.save()
+    return redirect('category', slug=category.slug)
+
 def category_page(request, slug):
     if slug == 'no_category':
         category = '미분류'
         post_list = Post.objects.filter(category=None)
     else:
-        category = Category.objects.get(slug=slug)
+        category = get_object_or_404(Category, slug=slug)
         post_list = Post.objects.filter(category=category)
 
     return render(
@@ -28,6 +35,7 @@ def category_page(request, slug):
             'categories': Category.objects.all(),
             'no_categories_post_count': Post.objects.filter(category=None).count(),
             'category': category,
+            'no_category_slug': 'no_category',
         }
     )
 

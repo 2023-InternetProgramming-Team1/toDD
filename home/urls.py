@@ -10,7 +10,9 @@ urlpatterns = [
     # 메인
     path('', views.PostList.as_view(), name='post_list'),
     # 카테고리 별
-    path('category/<str:slug>/', views.category_page),
-    # 컴플리트
+    path('category/<str:slug>/', views.category_page, name='category'),
+    # 컴플리트(메인)
     path('todo_check/<int:pk>/', views.todo_check, name='todo_check'),
+    # 컴플리트(카테고리)
+    path('category/<str:slug>/todo_check_category/<int:pk>/', views.todo_check_category, name='todo_check_category'),
     ]
