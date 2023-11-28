@@ -76,7 +76,11 @@
     text-decoration: none;
 }
 
-#todoIcon {
+#todoIconCom {
+    width: 40px;
+}
+
+#todoIconInCom {
     width: 40px;
 }
 

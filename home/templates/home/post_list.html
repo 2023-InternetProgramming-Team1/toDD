@@ -28,16 +28,12 @@
                     <a
                             href="{{ category.get_absolute_url }}"
                             style="text-decoration: none; color: #2d3142"
-                    >{{ category }} ({{ category.post_set.count }})</a
-                    >
+                    >{{ category }} ({{ category.post_set.count }})</a>
                 </li>
                 {% endfor %}
                 <li>
-                    <a
-                            href="/home/category/no_category/"
-                            style="text-decoration: none; color: #2d3142"
-                    >기타 ({{ no_categories_post_count }})</a
-                    >
+                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">미분류 ({{ no_categories_post_count }})</a
+>
                 </li>
             </ul>
         </div>
@@ -59,20 +55,22 @@
             </div>
             <div class="todoBox">
                 {% if post_list.exists %}
-                {% for p in post_list %}
-                <form class="todo" style="margin-bottom:10px"method="post" action="{% url 'todo_check' pk=p.pk %}">
-                    {% csrf_token %}
-                        <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
-                            {% if p.complete %}
-                                <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIcon"/>
-                            {% else %}
-                                <img src="{% static 'img/home_incom.png' %}" alt="Complete" id="todoIcon"/>
-                            {% endif %}
-                        </button>
-                        <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:9 }}</a>
-                        <div id="todoDeadline">( {{ p.deadline }})</div>
-                </form>
-                {% endfor %}
+
+                    {% for p in post_list %}
+                        <form class="todo" style="margin-bottom:10px"method="post" action="{% url 'todo_check' pk=p.pk %}">
+                            {% csrf_token %}
+                                <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
+                                    {% if p.complete %}
+                                        <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
+                                    {% else %}
+                                        <img src="{% static 'img/home_incom.png' %}" alt="Complete" id="todoIconInCom"/>
+                                    {% endif %}
+                                </button>
+                                <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:9 }}</a>
+                                <div id="todoDeadline">( {{ p.deadline }})</div>
+                        </form>
+                    {% endfor %}
+
                 {% else %}
                 <div class="empty">
                     <div id="des">

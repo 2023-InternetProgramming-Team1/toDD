@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('delete_<int:pk>/', views.postDelete, name='postDelete'),
     path('edit_list_<int:pk>/', views.postEdit, name='postEdit'),
     path('add_list/', views.postCreate, name='postCreate'),
     path('check_details_<int:pk>/', views.PostDetail.as_view()),
@@ -12,4 +13,4 @@ urlpatterns = [
     path('category/<str:slug>/', views.category_page),
     # 컴플리트
     path('todo_check/<int:pk>/', views.todo_check, name='todo_check'),
-]
+    ]

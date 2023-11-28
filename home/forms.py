@@ -27,3 +27,4 @@ class PostForm(forms.ModelForm):
                     'style': 'background-color: #FFEC9D;',
                 }),
         }
+

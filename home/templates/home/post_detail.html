@@ -25,6 +25,14 @@
                         {{ post.content }}
                     </div>
                 </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-1">
+                    <div class="row pt-2 col pe-3">
+                        <a href="{% url 'postDelete' post.id %}" role="button">
+                            <img src="{% static 'img/delete_icon.png' %}" width="90%" height="90%" alt="delete">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -34,8 +42,9 @@
         <div class="row my-2 col mx-5">
             <!--마감 기한 출력-->
             <div class="col-md-8">
-                <div style="background-color: #FFEC9D; border: 8px solid #FFEC9D; border-radius: 50px; font-size:20px;" class="row py-2 col px-5">
-                    <b><span style="color: #E71D36">DeadLine: </span>{{ post.deadline.year }}년 {{ post.deadline.month }}월 {{ post.deadline.day }}일 {{ post.deadline.hour }}시 {{ post.deadline.minute }}분까지</b>
+                <div style="background-color: #FFEC9D; border: 8px solid #FFEC9D; border-radius: 50px; font-size:20px;" class="row pt-3 col px-5">
+                    <p><b><span style="color: #E71D36">DeadLine:&nbsp;&nbsp;</span>{{ post.deadline.year }}년 {{ post.deadline.month }}월 {{ post.deadline.day }}일&nbsp;&nbsp;{{ post.deadline.hour }}시 {{ post.deadline.minute }}분까지</b>
+                        <span style="color:gray; text-align:end;">(24시간 단위)</span></p>
                     <!--  {{ post.deadline.second }}초 -->
                 </div>
             </div>
