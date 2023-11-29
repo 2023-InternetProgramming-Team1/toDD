@@ -1,0 +1,27 @@
+<!-- activity_detail.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block main_area %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <div>
+    <div>
+      <h3 class="main-title">학습 활동 추가</h3>
+    </div>
+    <div>
+      <h4 class="sub-title">학습 활동</h4>
+      <div class="icon-button">
+        <a href="{% url 'assignment_create' activity.id %}" class="btn btn-secondary">
+          <span class="icon">Icon</span>
+          과제
+        </a>
+      </div>
+      <div class="icon-button">
+        <a href="{% url 'quiz_create' activity.id %}" class="btn btn-secondary">
+          <span class="icon">Icon</span>
+          퀴즈
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
