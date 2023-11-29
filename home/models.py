@@ -27,10 +27,10 @@ class Post(models.Model):
     # created_at = models.DateTimeField(auto_now_add=True)
 
     # 이클래스 모델 불러오기
-    lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
-    activity = models.ForeignKey(Activity, null=True, blank=True, on_delete=models.SET_NULL)
-    assignment = models.OneToOneField(Assignment, null=True, blank=True, on_delete=models.SET_NULL)
-    quiz = models.OneToOneField(Quiz, null=True, blank=True, on_delete=models.SET_NULL)
+    # lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
+    # activity = models.ForeignKey(Activity, null=True, blank=True, on_delete=models.SET_NULL)
+    # assignment = models.OneToOneField(Assignment, null=True, blank=True, on_delete=models.SET_NULL)
+    # quiz = models.OneToOneField(Quiz, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f'[{self.pk}] {self.title}'

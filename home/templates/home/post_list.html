@@ -51,6 +51,7 @@
             <div class="todoBox">
                 {% if post_list.exists %}
                     {% for p in post_list %}
+                        {% if p.deadline.date == today.date %}
                         <form class="todo" style="margin-bottom:10px" method="post" action="{% url 'todo_check' pk=p.pk %}">
                             {% csrf_token %}
                             <button type="submit" id="checkBtn"
@@ -64,6 +65,7 @@
                             <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:8 }}</a>
                             <div id="todoDeadline">( {{ p.deadline }})</div>
                         </form>
+                        {% endif %}
                     {% endfor %}
                 {% else %}
                 <div class="empty">
