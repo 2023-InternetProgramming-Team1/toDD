@@ -11,10 +11,17 @@
         <div style="background-color: #FFF7D3; border-radius: 110px;" class="row my-2 py-5 col px-5 mx-5">
             <div class="row">
                 <div class="col-md-1">
-                    <div class="row my-1 py-2 col px-1">
-                        <button type="button" class="btm_image border-0" id="box" style="background-color: #FFF7D3;  height: 100%; width: 80%;">
-                            <img src="{% static 'img/home_incom.png' %}" width="50px" height="50px" alt="incom">
-                        </button>
+                    <div class="row my-1 py-3 col px-1">
+                        <form method="post" action="{% url 'todo_check2' post.pk %}">
+                            {% csrf_token %}
+                                <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-left: 10px;">
+                                    {% if post.complete %}
+                                        <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
+                                    {% else %}
+                                        <img src="{% static 'img/home_incom.png' %}" alt="Complete" id="todoIconInCom"/>
+                                    {% endif %}
+                                </button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-8">

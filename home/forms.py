@@ -4,12 +4,12 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'deadline']
+        fields = ['title', 'content', 'deadline', 'category']
         widgets = {
             'title': forms.TextInput(
                 attrs={
                     'class': 'form-control border-0',
-                    'style': 'background-color: #FFFFF4; type="text 500px; max-length: 30;',
+                    'style': 'background-color: #FFFFF4; max-length: 30;',
                     'placeholder': '제목 작성',
                 }),
             'content': forms.Textarea(
@@ -26,5 +26,6 @@ class PostForm(forms.ModelForm):
                     'class': 'form-control border-0',
                     'style': 'background-color: #FFEC9D;',
                 }),
+
         }
 
