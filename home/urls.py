@@ -13,4 +13,5 @@ urlpatterns = [
     path('category/<str:slug>/', views.category_page),
     # 컴플리트
     path('todo_check/<int:pk>/', views.todo_check, name='todo_check'),
+    path('todo_check2/<int:pk>/', views.todo_check2, name='todo_check2'),
     ]

@@ -67,7 +67,7 @@
                                     {% endif %}
                                 </button>
                                 <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:9 }}</a>
-                                <div id="todoDeadline">( {{ p.deadline }})</div>
+                                <div id="todoDeadline">({{ p.deadline|timeuntil|cut:"," }})</div>
                         </form>
                     {% endfor %}
 
