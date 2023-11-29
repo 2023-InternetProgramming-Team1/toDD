@@ -9,12 +9,9 @@
     <h>마감 기한이 얼마 남지 않은 <br> 일정이 있어요</h>
     <hr>
 
+
+<!-- 알릴 내용 추가-->
     {% load static %}
-    <div class="detail"><a href="/alarm/">
-        <img src="{% static 'images/Vector-popup.png' %}" style="width:30%;"></a></div>
-
-<!-- 알릴 내용 추가
-
     {% for p in post_list %}
         {% if p.category %}
         {% else %}
@@ -22,6 +19,6 @@
         <div class="detail"><a href="/alarm/">
             <img src="{% static 'images/Vector-popup.png' %}" style="width:30%;"></a></div>
         {% endif %}
-    {% endfor %} -->
+    {% endfor %}
 </body>
 </html>

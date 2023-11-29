@@ -7,13 +7,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
-
 class Post(models.Model):
     title = models.CharField(max_length=30)
     category= models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-    deadline = models.DateField(null=True)
+    deadline = models.DateTimeField(null=True)
 
+    def __str__(self):
+        return self.title
     def get_absolute_url(self):
         return f'/alarm/{self.pk}'
 
