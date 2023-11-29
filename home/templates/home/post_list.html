@@ -36,13 +36,13 @@
     <div class="col-8 mt-3 mb-5">
         <div class="listBox" style="position: relative;">
             <div class="controll">
-                <a href="#" id="before"
+                <a href="#" id="before" onclick="before"
                 ><img
                         src="{% static 'img/home_before.png' %}"
                         style="width: 40px"
                 /></a>
-                <div id="date" style="font-weight: 700;">2023.11.18 (토)</div>
-                <a href="#" id="after"
+                <div id="date" style="font-weight: 700;">{{ today }}</div>
+                <a href="#" id="after" onclick="after"
                 ><img
                         src="{% static 'img/home_after.png' %}"
                         style="width: 40px"

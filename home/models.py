@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
 import os
+from eclass.models import Lecture, Activity, Assignment, Quiz
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -23,6 +23,14 @@ class Post(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     # 완료 여부
     complete = models.BooleanField(default=False)
+    # 리스트 만든 날짜
+    # created_at = models.DateTimeField(auto_now_add=True)
+
+    # 이클래스 모델 불러오기
+    lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
+    activity = models.ForeignKey(Activity, null=True, blank=True, on_delete=models.SET_NULL)
+    assignment = models.OneToOneField(Assignment, null=True, blank=True, on_delete=models.SET_NULL)
+    quiz = models.OneToOneField(Quiz, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f'[{self.pk}] {self.title}'

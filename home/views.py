@@ -4,6 +4,9 @@ from django.views.generic import ListView, DetailView, View
 from .forms import PostForm
 from .models import Post, Category
 
+from datetime import datetime
+from django.utils.dateformat import DateFormat
+
 
 def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
@@ -47,6 +50,9 @@ class PostList(ListView):
         context = super(PostList, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
+        today = datetime.now()
+        dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
+        context['today'] = DateFormat(today).format('Y.m.d') + ' (' + dateDict[today.weekday()] + ')'
         return context
 
 
