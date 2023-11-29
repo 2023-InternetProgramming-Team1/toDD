@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block main_area %}
 
-{% block content %}
     <h1>Create Quiz</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Create Quiz</button>
+        <button type="submit">저장</button>
     </form>
 {% endblock %}

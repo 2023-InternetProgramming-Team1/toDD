@@ -1,0 +1,65 @@
+/* static/css/styles.css */
+
+.activity-list {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.activity-box {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.add-activity {
+  text-align: right;
+}
+
+.activity-detail-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.main-section,
+.sub-section,
+.add-activity {
+  /* flex: 1; */ /* 이 부분을 주석 처리하거나 제거합니다. */
+}
+
+.main-box,
+.sub-box,
+.add-activity form {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.main-title,
+.sub-title {
+  background-color: #001f3f;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sub-box {
+  background-color: #d3d3d3;
+}
+
+.icon-button {
+  margin-bottom: 10px;
+}
+
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #001f3f;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  margin-right: 10px;
+  border-radius: 5px;
+}

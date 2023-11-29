@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_area %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+   <h2>{{ lecture.name }}</h2>
+
+  <div class="activity-list">
+    <h3>Activities</h3>
+    {% for activity in lecture.activity_set.all %}
+      <div class="activity-box">
+        <strong>Week {{ activity.week }}:</strong> {{ activity.title }}
+        <ul>
+          {% if activity.assignment %}
+            <li>Assignment: {{ activity.assignment.title }}</li>
+          {% endif %}
+          {% if activity.quiz %}
+            <li>Quiz: {{ activity.quiz.title }}</li>
+          {% endif %}
+        </ul>
+        <div class="add-activity">
+          <a href="{% url 'activity_detail' activity.id %}" class="btn btn-success">+ 활동 추가</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -9,16 +9,18 @@
                 <h1>UPDATED</h1><br>
                 {% for p in post_list %}
                     {% if p.category %}
+                    {% else %}
                         <div class="container">
                             <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
                             <div class="title">{{ p.title|truncatechars:30 }}</div>
                             <div class="detail"><a href="{{ p.get_absolute_url }}">
-                              <img src="{% static 'images/Vector-detail.png' %}" style="width:70%;", onclick="fn_detail"></a></div>
+                              <img src="{% static 'images/Vector-detail.png' %}" style="width:70%;"></a></div>
                             <div class="remove">
-                              <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></div>
+                                <a href="{{p.pk}}/remove"><img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                            </div>
+
                         </div>
                         <br>
-                    {% else %}
                     {% endif %}
                 {% endfor %}
 
@@ -28,27 +30,34 @@
             <!-- 마감기한이 임박한 일정 -->
             <div class="col-6">
                 <h1>CHECK THIS</h1><br>
-
                 {% for p in post_list %}
                     {% if p.category %}
-                    {% else %}
                         <div class="container">
-                          <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
-                          <div class="title">{{ p.title | truncatechars:15 }}</div>
-                          <div class="deadline">
-                              {{ p.deadline | truncatechars:10 }}</div>
-                          <div class="detail"><a href="{{ p.get_absolute_url }}">
-                              <img src="{% static 'images/Vector-detail.png' %}" style="width:70%"></a></div>
-                        <div class="remove">
-                              <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a></div>
+                            <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
+                            <div class="title">{{ p.title|truncatechars:13 }}</div>
+                            <div class="detail"><a href="{{ p.get_absolute_url }}">
+                              <img src="{% static 'images/Vector-detail.png' %}" style="width:70%;"></a></div>
+                            <div class="deadline">
+                              {{ p.deadline|timeuntil }} 남음</div>
+                            <div class="remove">
+                                <a href="{{p.pk}}/remove"><img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                            </div>
+
                         </div>
                         <br>
+                    {% else %}
                     {% endif %}
-
                 {% endfor %}
             </div>
         </div>
     </div>
+
+    {% for p in post_list %}
+        {% empty %}
+            <h>Checked</h>
+    {% endfor %}
+
+
 
     <!-- 팝업창 띄우기-->
     <script langauge="javascript">

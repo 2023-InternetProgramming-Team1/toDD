@@ -4,9 +4,8 @@ from django.views.generic import ListView, DetailView, View
 from .forms import PostForm
 from .models import Post, Category
 
-from datetime import datetime
+from datetime import datetime,time
 from django.utils.dateformat import DateFormat
-
 
 def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
@@ -21,6 +20,14 @@ def todo_check_category(request, pk, slug):
     todo.complete = not todo.complete
     todo.save()
     return redirect('category', slug=category.slug)
+
+def todo_check2(request, pk):
+
+    todo = get_object_or_404(Post, pk=pk)
+    todo.complete = not todo.complete
+    todo.save()
+    print(f'Todo with ID {pk} updated: complete={todo.complete}')
+    return redirect(f'../../../home/check_details_{pk}/')
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -55,7 +62,6 @@ class PostList(ListView):
         context['today'] = DateFormat(today).format('Y.m.d') + ' (' + dateDict[today.weekday()] + ')'
         return context
 
-
 class CategoryList(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
@@ -68,16 +74,17 @@ class PostDetail(DetailView):
 
 
 def postCreate(request):
-    if request.method == "POST":  # 데이터를 저장해야할때
+    if request.method == "POST":  # 데이터를 저장할 때
         form = PostForm(request.POST)
         if form.is_valid():
             post = Post()
             post.title = form.cleaned_data['title']
             post.content = form.cleaned_data['content']
             post.deadline = form.cleaned_data['deadline']
+            post.category = form.cleaned_data['category']
             post.save()
             return redirect(post)
-    else:  # 입력 양식을 보여줘야 할때
+    else:  # 입력 양식을 보여줄 때
         form = PostForm()
     return render(request, 'home/post_form.html', {
         'form': form
@@ -92,6 +99,7 @@ def postEdit(request, pk):
             post.title = form.cleaned_data['title']
             post.content = form.cleaned_data['content']
             post.deadline = form.cleaned_data['deadline']
+            post.category = form.cleaned_data['category']
             post.save()
         return redirect(post)
     else: # 수정사항을 입력하기 위해 페이지에 처음 접속했을 때
