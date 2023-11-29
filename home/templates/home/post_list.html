@@ -1,7 +1,6 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block main_area %}
-
 <div class="row mx-5">
     <div class="col-4 mt-3 mb-5">
         <div id="title" style="font-size: 50px">
@@ -25,29 +24,25 @@
             <ul id="category" style="margin-bottom:20px">
                 {% for category in categories %}
                 <li>
-                    <a
-                            href="{{ category.get_absolute_url }}"
-                            style="text-decoration: none; color: #2d3142"
-                    >{{ category }} ({{ category.post_set.count }})</a>
+                    <a href="{{ category.get_absolute_url }}" style="text-decoration: none; color: #2d3142">{{ category }} ({{ category.post_set.count }})</a>
                 </li>
                 {% endfor %}
                 <li>
-                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">미분류 ({{ no_categories_post_count }})</a
->
+                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">미분류 ({{ no_categories_post_count }})</a>
                 </li>
             </ul>
         </div>
     </div>
     <div class="col-8 mt-3 mb-5">
-        <div class="listBox">
+        <div class="listBox" style="position: relative;">
             <div class="controll">
-                <a href="#" id="before"
+                <a href="#" id="before" onclick="before"
                 ><img
                         src="{% static 'img/home_before.png' %}"
                         style="width: 40px"
                 /></a>
-                <div id="date" style="font-weight: 700;">2023.11.18 (토)</div>
-                <a href="#" id="after"
+                <div id="date" style="font-weight: 700;">{{ today }}</div>
+                <a href="#" id="after" onclick="after"
                 ><img
                         src="{% static 'img/home_after.png' %}"
                         style="width: 40px"
@@ -55,22 +50,23 @@
             </div>
             <div class="todoBox">
                 {% if post_list.exists %}
-
                     {% for p in post_list %}
-                        <form class="todo" style="margin-bottom:10px"method="post" action="{% url 'todo_check' pk=p.pk %}">
+                        {% if p.deadline.date == today.date %}
+                        <form class="todo" style="margin-bottom:10px" method="post" action="{% url 'todo_check' pk=p.pk %}">
                             {% csrf_token %}
-                                <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
-                                    {% if p.complete %}
-                                        <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
-                                    {% else %}
-                                        <img src="{% static 'img/home_incom.png' %}" alt="Complete" id="todoIconInCom"/>
-                                    {% endif %}
-                                </button>
-                                <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:9 }}</a>
-                                <div id="todoDeadline">({{ p.deadline|timeuntil|cut:"," }})</div>
+                            <button type="submit" id="checkBtn"
+                                    style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
+                                {% if p.complete %}
+                                <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
+                                {% else %}
+                                <img src="{% static 'img/home_incom.png' %}" alt="InComplete" id="todoIconInCom"/>
+                                {% endif %}
+                            </button>
+                            <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:8 }}</a>
+                            <div id="todoDeadline">({{ p.deadline|timeuntil|cut:"," }})</div>
                         </form>
+                        {% endif %}
                     {% endfor %}
-
                 {% else %}
                 <div class="empty">
                     <div id="des">
@@ -86,6 +82,9 @@
                 </div>
                 {% endif %}
             </div>
+            <a id="small_add" href="/home/add_list/" style="position: absolute; right: 60px; bottom: 30px; width: 40px;">
+                    <img src="{% static 'img/home_add.png' %}" style="width: 40px"/>
+            </a>
         </div>
     </div>
 </div>

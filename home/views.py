@@ -4,7 +4,8 @@ from django.views.generic import ListView, DetailView, View
 from .forms import PostForm
 from .models import Post, Category
 
-from datetime import datetime, time
+from datetime import datetime,time
+from django.utils.dateformat import DateFormat
 
 def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
@@ -12,6 +13,13 @@ def todo_check(request, pk):
     todo.save()
     print(f'Todo with ID {pk} updated: complete={todo.complete}')
     return redirect('post_list')
+
+def todo_check_category(request, pk, slug):
+    category = get_object_or_404(Category, slug=slug)
+    todo = get_object_or_404(Post, pk=pk)
+    todo.complete = not todo.complete
+    todo.save()
+    return redirect('category', slug=category.slug)
 
 def todo_check2(request, pk):
 
@@ -26,7 +34,7 @@ def category_page(request, slug):
         category = '미분류'
         post_list = Post.objects.filter(category=None)
     else:
-        category = Category.objects.get(slug=slug)
+        category = get_object_or_404(Category, slug=slug)
         post_list = Post.objects.filter(category=category)
 
     return render(
@@ -37,6 +45,7 @@ def category_page(request, slug):
             'categories': Category.objects.all(),
             'no_categories_post_count': Post.objects.filter(category=None).count(),
             'category': category,
+            'no_category_slug': 'no_category',
         }
     )
 
@@ -48,6 +57,9 @@ class PostList(ListView):
         context = super(PostList, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
+        today = datetime.now()
+        dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
+        context['today'] = DateFormat(today).format('Y.m.d') + ' (' + dateDict[today.weekday()] + ')'
         return context
 
 class CategoryList(ListView):

@@ -94,6 +94,13 @@
     padding-top: 6px;
 }
 
+#small_add {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 40px;
+}
+
 .empty {
     display: flex;
     flex-direction: column;
