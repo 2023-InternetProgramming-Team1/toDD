@@ -11,12 +11,12 @@ class Activity(models.Model):
 
 class Assignment(models.Model):
     title = models.CharField(max_length=200)
-    due_date = models.DateField()
+    due_date = models.DateTimeField()
     content = models.TextField()
     activity = models.OneToOneField('Activity', on_delete=models.CASCADE)
 
 class Quiz(models.Model):
     title = models.CharField(max_length=200)
-    due_date = models.DateField()
+    due_date = models.DateTimeField()
     questions = models.TextField()
     activity = models.OneToOneField('Activity', on_delete=models.CASCADE)
