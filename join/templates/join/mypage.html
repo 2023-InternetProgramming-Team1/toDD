@@ -59,7 +59,6 @@
                 font-weight: 400;
                 line-height: normal;
             }
-
         </style>
     </head>
     <body
@@ -70,6 +69,7 @@
             font-family: 'Inter', sans-serif;
         "
     >
+
         <!-- NavBar -->
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #2D3142;">
         <div class="container">
@@ -115,58 +115,59 @@
         <!-- 페이지 내용 작성-->
         <div class="container">
             <div class="box">
-                <div class="date">11/20</div>
+                <div class="day">월요일</div>
+                <div class="date">{{ monday }}</div>
                 <div class="text">
-                    <div class="todo">
-                        <img
-                            src="{% static 'img/home_incom.png' %}"
-                            id="todoIcon"
-                        />
-                        <div id="todoTitle">{{ p.title }}</div>
-                        <div id="todoDeadline">( {{ p.deadline }})</div>
-                    </div>
+                    내용
                 </div>
             </div>
             <div class="box">
-                <div class="date">11/21</div>
+                <div class="day">화요일</div>
+                <div class="date">{{ tuesday }}</div>
                 <div class="text">
-                    sdfjskfjkdfjsk
+                    내용
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="day">수요일</div>
+                <div class="date">{{ wednesday }}</div>
+                <div class="text">
+                    내용
                 </div>
             </div>
             <div class="box">
-                <div class="date">11/22</div>
+                <div class="day">목요일</div>
+                <div class="date">{{ thursday }}</div>
                 <div class="text">
-                    sdfjskfjkdfjsk
+                    내용
                 </div>
             </div>
             <div class="box">
-                <div class="date">11/23</div>
+                <div class="day">금요일</div>
+                <div class="date">{{ friday }}</div>
                 <div class="text">
-                    sdfjskfjkdfjsk
+                    내용
                 </div>
             </div>
             <div class="box">
-                <div class="date">11/24</div>
+                <div class="day" >토요일</div>
+                <div class="date" style="color: blue;">{{ saturday }}</div>
                 <div class="text">
-                    sdfjskfjkdfjsk
+                    내용
                 </div>
             </div>
             <div class="box">
-                <div class="date">11/25</div>
+                <div class="day">일요일</div>
+                <div class="date" style="color: red;">{{ sunday }}</div>
                 <div class="text">
-                    sdfjskfjkdfjsk
+                    내용
                 </div>
             </div>
             <div class="box">
-                <div class="date">11/26</div>
-                <div class="text">
-                    sdfjskfjkdfjsk
-                </div>
-            </div>
-            <div class="box">
-                <div class="date">11/27</div>
-                <div class="text">
-                    sdfjskfjkdfjsk
+                <div class="day">없는 날짜</div>
+                <div class="date">
+                    Do Your Best
                 </div>
             </div>
         </div>

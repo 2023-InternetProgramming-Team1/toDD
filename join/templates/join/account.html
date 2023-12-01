@@ -41,7 +41,7 @@
             margin-top:20px;
         }
         .r-group {
-            text-align: center; /* 라벨 가운데 정렬 */
+            text-align: center;
             margin-top:20px;
             margin-bottom:20px;
 
@@ -107,6 +107,18 @@
             cursor: pointer;
         }
         </style>
+        <script>
+        function onInputChange(inputId, dotIndex) {
+            var input = document.getElementById(inputId);
+            var redDot = document.querySelectorAll('.r-group .g-dot')[dotIndex];
+
+            if (input.value.trim() !== '') {
+                redDot.src = '/static/img/greendot.png';
+            } else {
+                redDot.src = '/static/img/reddot.png';
+            }
+        }
+    </script>
     </head>
     <body
         class="d-flex flex-column min-vh-100"
@@ -128,7 +140,7 @@
         <!-- 페이지 내용 작성-->
     <div class="container my-4">
         <div class="main-container">
-            <div>
+            <div style="position: relative; left: -10px; top: -150px;">
                 <img src="{% static 'img/my.png' %}" alt="Person Image" class="registration-image">
             </div>
             <div class="registration-box">
@@ -136,17 +148,17 @@
                     <div class="r-group">
                         <img src="{% static 'img/reddot.png' %}" alt="dot" class="g-dot">
                         <label for="username">이름을 입력하시오.</label>
-                        <input type="text" id="username" name="username" placeholder="      이름을 입력하시오.">
+                        <input type="text" id="username" name="username" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이름을 입력하시오." oninput="onInputChange('username', 0)">
                     </div>
                     <div class="r-group">
                         <img src="{% static 'img/reddot.png' %}" alt="dot" class="g-dot">
                         <label for="studentId">학번을 입력하시오.</label>
-                        <input type="password" id="studentId" name="studentId" placeholder="      학번을 입력하시오.">
+                        <input type="password" id="studentId" name="studentId" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;학번을 입력하시오." oninput="onInputChange('studentId', 1)">
                     </div>
                     <div class="r-group">
                         <img src="{% static 'img/reddot.png' %}" alt="dot" class="g-dot">
                         <label for="password">비밀번호를 입력하시오.</label>
-                        <input type="password" id="password" name="password" placeholder="      비밀번호를 입력하시오.">
+                        <input type="password" id="password" name="password" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호를 입력하시오." oninput="onInputChange('password', 2)">
                     </div>
                 </div>
             </div>
