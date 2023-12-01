@@ -15,5 +15,8 @@ urlpatterns = [
     path('todo_check/<int:pk>/', views.todo_check, name='todo_check'),
     # 컴플리트(카테고리)
     path('category/<str:slug>/todo_check_category/<int:pk>/', views.todo_check_category, name='todo_check_category'),
+    # 날짜 넘기기
+    path('change_date_next/', views.PostList.as_view(), name='change_date_next'),
+
     path('todo_check2/<int:pk>/', views.todo_check2, name='todo_check2'),
     ]

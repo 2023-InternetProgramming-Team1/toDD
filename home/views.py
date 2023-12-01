@@ -4,15 +4,20 @@ from django.views.generic import ListView, DetailView, View
 from .forms import PostForm
 from .models import Post, Category
 
-from datetime import datetime,time
+from datetime import datetime, time, timedelta
 from django.utils.dateformat import DateFormat
+from django.utils import timezone
+from django.urls import reverse
+
 
 def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
     print(f'Todo with ID {pk} updated: complete={todo.complete}')
-    return redirect('post_list')
+
+    return redirect(request.META['HTTP_REFERER'])
+
 
 def todo_check_category(request, pk, slug):
     category = get_object_or_404(Category, slug=slug)
@@ -21,13 +26,14 @@ def todo_check_category(request, pk, slug):
     todo.save()
     return redirect('category', slug=category.slug)
 
-def todo_check2(request, pk):
 
+def todo_check2(request, pk):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
     print(f'Todo with ID {pk} updated: complete={todo.complete}')
     return redirect(f'../../../home/check_details_{pk}/')
+
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -49,18 +55,49 @@ def category_page(request, slug):
         }
     )
 
+
+from datetime import timedelta
+from django.utils import timezone
+
 class PostList(ListView):
     model = Post
     ordering = '-pk'
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
+
+        # 이전 날짜
+        stored_date_str = self.request.session.get('stored_date')
+
+        if stored_date_str:
+            stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date()
+        else:
+            stored_date = timezone.now().date()
+
+        # 날짜 바꾸기
+        if 'prev' in self.request.GET:
+            stored_date -= timedelta(days=1)
+        elif 'next' in self.request.GET:
+            stored_date += timedelta(days=1)
+
+        # 날짜 -> 투두 리스트
+        context['post_list_today'] = Post.objects.filter(deadline__date=stored_date)
+
+        # 날짜 출력
+        dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
+        today_formatted = DateFormat(stored_date).format('Y.m.d')
+        context['today'] = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
+
+        # 카테고리
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
-        today = datetime.now()
-        dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
-        context['today'] = DateFormat(today).format('Y.m.d') + ' (' + dateDict[today.weekday()] + ')'
+
+        # 변경 날짜 저장
+        self.request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
+
         return context
+
+
 
 class CategoryList(ListView):
     def get_context_data(self, **kwargs):
@@ -68,6 +105,7 @@ class CategoryList(ListView):
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
         return context
+
 
 class PostDetail(DetailView):
     model = Post
@@ -93,7 +131,7 @@ def postCreate(request):
 
 def postEdit(request, pk):
     post = Post.objects.get(id=pk)
-    if request.method == "POST": # 글을 수정사항을 입력하고 제출을 눌렀을 때
+    if request.method == "POST":  # 글을 수정사항을 입력하고 제출을 눌렀을 때
         form = PostForm(request.POST)
         if form.is_valid():
             post.title = form.cleaned_data['title']
@@ -102,7 +140,7 @@ def postEdit(request, pk):
             post.category = form.cleaned_data['category']
             post.save()
         return redirect(post)
-    else: # 수정사항을 입력하기 위해 페이지에 처음 접속했을 때
+    else:  # 수정사항을 입력하기 위해 페이지에 처음 접속했을 때
         form = PostForm(instance=post)
         context = {
             'form': form,

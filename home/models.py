@@ -1,6 +1,7 @@
 from django.db import models
 import os
 from eclass.models import Lecture, Activity, Assignment, Quiz
+from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -24,7 +25,7 @@ class Post(models.Model):
     # 완료 여부
     complete = models.BooleanField(default=False)
     # 리스트 만든 날짜
-    # created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     # 이클래스 모델 불러오기
     # lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
