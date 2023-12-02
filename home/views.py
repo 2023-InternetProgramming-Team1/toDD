@@ -25,14 +25,14 @@ def todo_check_category(request, pk, slug):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
-    return redirect('category', slug=category.slug)
+    return redirect('home:category', slug=category.slug)
 
 
 def todo_check_no_category(request, pk):
     todo = get_object_or_404(Post, pk=pk, category=None)
     todo.complete = not todo.complete
     todo.save()
-    return redirect('category', slug='no_category')
+    return redirect('home:category', slug='no_category')
 
 
 def todo_check2(request, pk):
