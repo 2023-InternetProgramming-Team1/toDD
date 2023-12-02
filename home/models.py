@@ -27,12 +27,6 @@ class Post(models.Model):
     # 리스트 만든 날짜
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
-    # 이클래스 모델 불러오기
-    # lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
-    # activity = models.ForeignKey(Activity, null=True, blank=True, on_delete=models.SET_NULL)
-    # assignment = models.OneToOneField(Assignment, null=True, blank=True, on_delete=models.SET_NULL)
-    # quiz = models.OneToOneField(Quiz, null=True, blank=True, on_delete=models.SET_NULL)
-
     def __str__(self):
         return f'[{self.pk}] {self.title}'
 

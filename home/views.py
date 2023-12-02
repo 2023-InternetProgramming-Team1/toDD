@@ -7,16 +7,16 @@ from .models import Post, Category
 from datetime import datetime, time, timedelta
 from django.utils.dateformat import DateFormat
 from django.utils import timezone
-from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
-    print(f'Todo with ID {pk} updated: complete={todo.complete}')
 
-    return redirect(request.META['HTTP_REFERER'])
+    referer = request.META.get('HTTP_REFERER', '/')
+    return HttpResponseRedirect(referer)
 
 
 def todo_check_category(request, pk, slug):
@@ -25,6 +25,12 @@ def todo_check_category(request, pk, slug):
     todo.complete = not todo.complete
     todo.save()
     return redirect('category', slug=category.slug)
+
+def todo_check_no_category(request, pk):
+    todo = get_object_or_404(Post, pk=pk, category=None)
+    todo.complete = not todo.complete
+    todo.save()
+    return redirect('category', slug='no_category')
 
 
 def todo_check2(request, pk):
@@ -55,10 +61,6 @@ def category_page(request, slug):
         }
     )
 
-
-from datetime import timedelta
-from django.utils import timezone
-
 class PostList(ListView):
     model = Post
     ordering = '-pk'
@@ -68,11 +70,19 @@ class PostList(ListView):
 
         # 이전 날짜
         stored_date_str = self.request.session.get('stored_date')
+        # 현재 날짜
+        current_date = timezone.now().date()
 
-        if stored_date_str:
-            stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date()
+        print(f'stored_date_str: {stored_date_str}')
+
+        if 'prev' not in self.request.GET and 'next' not in self.request.GET:
+            stored_date = current_date
+            self.request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
+            stored_date_str = self.request.session.get('stored_date')
         else:
-            stored_date = timezone.now().date()
+            stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date()
+
+        print(f'stored_date: {stored_date}')
 
         # 날짜 바꾸기
         if 'prev' in self.request.GET:
@@ -83,10 +93,13 @@ class PostList(ListView):
         # 날짜 -> 투두 리스트
         context['post_list_today'] = Post.objects.filter(deadline__date=stored_date)
 
-        # 날짜 출력
+        # 요일 설정
         dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
+
+        # 날짜 출력
         today_formatted = DateFormat(stored_date).format('Y.m.d')
         context['today'] = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
+
 
         # 카테고리
         context['categories'] = Category.objects.all()
@@ -96,7 +109,6 @@ class PostList(ListView):
         self.request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
 
         return context
-
 
 
 class CategoryList(ListView):
