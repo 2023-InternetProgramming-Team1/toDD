@@ -1,7 +1,7 @@
 from django.db import models
 import os
 from eclass.models import Lecture, Activity, Assignment, Quiz
-
+from django.contrib.auth.models import AbstractUser
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
@@ -11,6 +11,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return f'/home/category/{self.slug}'
+
 
 class Post(models.Model):
     # 투두 리스트 제목
@@ -37,3 +38,11 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return f'../../home/check_details_{self.pk}/'
+
+class My(models.Model):
+    users = models.ManyToManyField(Category, related_name='my')
+    my_path = models.CharField(max_length=100, default='home/my.html')
+
+    def __str__(self):
+        return f'My {self.pk}'
+

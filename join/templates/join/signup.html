@@ -92,14 +92,15 @@
             margin-left: 20px;
             margin-right:90px;
             margin-top:450px;
-
+            border:none;
+            color: #FFFFF4;
         }
         .g-dot{
             width:15px;
             height:15px;
             margin-right:30px;
         }
-            #submitButton img {
+        #submitButton img {
             flex-shrink:0;
             height:50px;
             width: 50px;
@@ -118,6 +119,7 @@
                 redDot.src = '/static/img/reddot.png';
             }
         }
+
     </script>
     </head>
     <body
@@ -163,23 +165,36 @@
                 </div>
             </div>
 
-            <div id="submitButton" onclick="submitForm()">
-                <a href="/join/login/"><img src="{% static 'img/save.png' %}" alt="Save Image"></a>
+<!--            <div id="submitButton" onclick="submitForm()">-->
+<!--                <a href="/join/login/"><img src="{% static 'img/save.png' %}" alt="Save Image"></a>-->
+<!--            </div>-->
+            <form method="post" onclick="submitForm()">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+            <div id="submitButton">
+<!--                <a href="/join/login/">-->
+                    <img src="{% static 'img/save.png' %}" alt="Save Image">
+<!--                </a>-->
             </div>
+            </form>
+
         </div>
     </div>
 
     <script>
     function submitForm() {
-        var username = document.getElementById("username").value;
-        var studentId = document.getElementById("studentId").value;
-        var password = document.getElementById("password").value;
+        var registeredUsername = document.getElementById("username").value;
+        var registeredStudentId = document.getElementById("studentId").value;
+        var registeredPassword = document.getElementById("password").value;
 
-        console.log("이름: " + username);
-        console.log("학번: " + studentId);
-        console.log("비밀번호: " + password);
-
-        alert('가입되었습니다!');
+        if (registeredUsername === "" || registeredStudentId === "" || registeredPassword === "") {
+            alert("모든 입력 필드를 작성해주세요.");
+            return false;
+        } else {
+            alert('가입되었습니다!');
+            window.location.href = '/join/login/';
+            return true;
+        }
     }
     </script>
     <!-- Footer -->
