@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views
 from django.views.generic import TemplateView
+
 app_name = 'home'
+
 urlpatterns = [
     path('delete_<int:pk>/', views.postDelete, name='postDelete'),
     path('edit_list_<int:pk>/', views.postEdit, name='postEdit'),
@@ -19,7 +21,7 @@ urlpatterns = [
     path('category/no_category/<int:pk>/', views.todo_check_no_category, name='todo_check_no_category'),
     # 날짜 넘기기
     path('change_date_next/', views.PostList.as_view(), name='change_date_next'),
-
+    # 컴플리트(상세확인)
     path('todo_check2/<int:pk>/', views.todo_check2, name='todo_check2'),
 
     path('my/', views.my, name='my'),

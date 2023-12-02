@@ -18,7 +18,7 @@ class PostForm(forms.ModelForm):
                     'cols': 70,
                     'rows': 8,
                     'style': 'background-color: #FFF7D3;',
-                    'placeholder': '내용 작성'
+                    'placeholder': '내용 작성',
                 }),
             'deadline': forms.DateTimeInput(
                 attrs={
@@ -26,6 +26,13 @@ class PostForm(forms.ModelForm):
                     'class': 'form-control border-0',
                     'style': 'background-color: #FFEC9D;',
                 }),
-
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['category'].widget.attrs.update({
+            'class': 'form-control border-0',
+            'style': 'background-color: #FFEC9D;',
+        })
 
