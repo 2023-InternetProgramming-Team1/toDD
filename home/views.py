@@ -63,9 +63,9 @@ def category_page(request, slug):
     )
 
 
-def createEclassPost(title, content, deadline):
+def createEclassPost(title, content, deadline, activity):
     return Post.objects.create(
-        title=title,
+        title=str('['+activity.lecture.name+'] ')+title,
         content=content,
         deadline=deadline,
         complete=False,
@@ -81,12 +81,12 @@ class PostList(ListView):
     quizzes = Quiz.objects.all()
 
     for assignment in assignments:
-        if not Post.objects.filter(title=assignment.title, content=assignment.content,
+        if not Post.objects.filter(title=str('['+assignment.activity.lecture.name+'] ')+assignment.title, content=assignment.content,
                                    deadline=assignment.due_date).exists():
-            createEclassPost(assignment.title, assignment.content, assignment.due_date)
+            createEclassPost(assignment.title, assignment.content, assignment.due_date,assignment.activity)
     for quiz in quizzes:
-        if not Post.objects.filter(title=quiz.title, content=quiz.questions, deadline=quiz.due_date).exists():
-            createEclassPost(quiz.title, quiz.questions, quiz.due_date)
+        if not Post.objects.filter(title=str('['+quiz.activity.lecture.name+'] ')+quiz.title, content=quiz.questions, deadline=quiz.due_date).exists():
+            createEclassPost(quiz.title, quiz.questions, quiz.due_date, quiz.activity)
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
