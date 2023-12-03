@@ -1,0 +1,65 @@
+/* lecture_detail_styles.css */
+
+/* Add your custom styles for the lecture_detail page */
+
+body {
+  background-color: #F7F9FA;
+  margin: 0;
+}
+
+.header-box {
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  padding: 50px;
+}
+
+#profile {
+  width: 100px; /* Adjust the width as needed */
+  height: auto;
+  margin-right: 20px;
+}
+
+.header-box div {
+  color: #fff;
+}
+
+.header-box p.name {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom:7px;
+}
+
+.header-box p.professor {
+  font-size: 16px;
+  margin: 0;
+}
+
+h6 {
+  background-color: #E4F0EB;
+  padding: 21px 25px 20px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.activity-title {
+  color: #1E5BAA;
+}
+
+.activity-list {
+  width: 100%;
+  margin: auto;
+  padding: 30px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+
+.activity-box {
+  margin-bottom: 20px;
+}
+
+.add-activity {
+  text-align: right;
+}
