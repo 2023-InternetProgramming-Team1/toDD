@@ -4,6 +4,7 @@
 {% load static %}
 {% block main_area %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/lecture_list_styles.css' %}">
+<div class="container my-4">
   <h4>강좌 전체보기</h4>
   <ul>
     {% for lecture in lectures %}
@@ -19,4 +20,5 @@
       </li>
     {% endfor %}
   </ul>
+</div>
 {% endblock %}
