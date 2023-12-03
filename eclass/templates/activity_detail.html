@@ -3,22 +3,26 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block main_area %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/activity_detail_styles.css' %}">
   <div>
-    <div>
-      <h3 class="main-title">학습 활동 추가</h3>
+    <div class="main-title-container">
+      <h4 class="main-title">학습 활동 추가</h4>
     </div>
-    <div>
-      <h4 class="sub-title">학습 활동</h4>
+    <div class="sub-title-container">
+      <h5 class="sub-title">학습 활동</h5>
       <div class="icon-button">
         <a href="{% url 'assignment_create' activity.id %}" class="btn btn-secondary">
-          <span class="icon">Icon</span>
+          <span class="icon">
+            <img src="{% static 'img/assignment.png' %}" alt="Icon">
+          </span>
           과제
         </a>
       </div>
       <div class="icon-button">
         <a href="{% url 'quiz_create' activity.id %}" class="btn btn-secondary">
-          <span class="icon">Icon</span>
+          <span class="icon">
+            <img src="{% static 'img/quiz.png' %}" alt="Icon">
+          </span>
           퀴즈
         </a>
       </div>
