@@ -199,3 +199,14 @@ def my(request):
         context
     )
 
+def get_weekday_number(day):
+    # 요일 문자열을 받아 해당하는 숫자를 반환하는 함수
+    weekdays = ['월', '화', '수', '목', '금', '토', '일']
+    return weekdays.index(day) + 1
+
+def my_view(request, day):
+    # 요청된 요일에 해당하는 완료된 과제들을 가져옴
+    weekday_number = get_weekday_number(day)
+    weekday_posts = Post.objects.filter(complete=True, deadline__week_day=weekday_number)
+
+    return render(request, 'home/my.html', {'weekday_posts': weekday_posts, 'selected_day': day})
