@@ -1,28 +1,15 @@
 from django.contrib.auth.models import AbstractUser
+from eclass.models import Lecture
 from django.db import models
 
 
 # Create your models here.
 
 class User(AbstractUser):
-    username = models.CharField(max_length=100, blank=True, null=True, unique=True)
-    studentId = models.IntegerField(blank=True, null=True,unique=True)
-    number = models.IntegerField(blank=True, null=True,unique=True)
+    studentId = models.IntegerField(blank=True, null=True, unique=True)
+    lecture = models.ForeignKey(Lecture, on_delete=models.SET_NULL, null=True, blank=True)
+
+    USERNAME_FIELD = 'studentId'  # 이 부분을 추가하여 studentId를 로그인에 사용
 
     def __str__(self):
         return f"{self.username} - {self.studentId}"
-
-
-class login(models.Model):
-    users = models.ManyToManyField(User, related_name='login')
-    login='join/login.html'
-
-class account(models.Model):
-    users = models.ManyToManyField(User, related_name='account')
-    account='join/account.html'
-
-class mypage(models.Model):
-    users = models.ManyToManyField(User, related_name='mypage')
-    mypage='join/mypage.html'
-
-
