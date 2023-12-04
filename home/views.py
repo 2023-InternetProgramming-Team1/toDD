@@ -16,15 +16,6 @@ def todo_check(request, pk):
     print(f'Todo with ID {pk} updated: complete={todo.complete}')
     return redirect('post_list')
 
-    referer = request.META.get('HTTP_REFERER', '/')
-    return HttpResponseRedirect(referer)
-
-def todo_check_category(request, pk, slug):
-    category = get_object_or_404(Category, slug=slug)
-    todo = get_object_or_404(Post, pk=pk)
-    todo.complete = not todo.complete
-    todo.save()
-    return redirect('category', slug=category.slug)
 
 def todo_check_no_category(request, pk):
     todo = get_object_or_404(Post, pk=pk, category=None)
@@ -66,7 +57,7 @@ class PostList(ListView):
     ordering = '-pk'
 
     def get_context_data(self, **kwargs):
-        context = super(PostList, self).get_context_data(**kwargs)
+        context = super(PostList, self).get_context_data()
 
         # 이전 날짜
         stored_date_str = self.request.session.get('stored_date')
@@ -99,6 +90,7 @@ class PostList(ListView):
         # 날짜 출력
         today_formatted = DateFormat(stored_date).format('Y.m.d')
         context['today'] = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
+
 
         # 카테고리
         context['categories'] = Category.objects.all()
