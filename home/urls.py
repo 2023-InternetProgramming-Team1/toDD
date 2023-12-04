@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('delete_<int:pk>/', views.postDelete, name='postDelete'),
