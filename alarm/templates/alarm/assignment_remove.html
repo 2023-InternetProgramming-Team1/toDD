@@ -1,0 +1,80 @@
+{% extends 'alarm/base.html' %}
+{% load static %}
+{% block main_area %}
+
+    <div class="container my-3">
+        <div class="row">
+            <!-- 이클래스에 추가된 과제 -->
+            <div class="col-6">
+                <h1>UPDATED</h1><br>
+                <form method="POST">
+                    {% csrf_token %}
+                    <h3>{{ Assignment.assignment.title|truncatechars:20 }}</h3>
+                    <button>알림삭제</button>
+                </form>
+                {% for item in updated_content %}
+                    {% if item.assignment != null %}
+                        <div class="container">
+                            <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
+                            <div class="title">{{ item.assignment.title|truncatechars:20 }}</div>
+                            <div class="eclass"><a href="#">
+                                <img src="{% static 'images/Vector-eclass.png' %}" style="width:70%;"></a></div>
+                            <div class="remove"><a href="#">
+                                <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                            </div>
+                        </div>
+                        <br>
+                    {% endif %}
+                    {% if item.quiz != null %}
+                        <div class="container">
+                            <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
+                            <div class="title">{{ item.quiz.title|truncatechars:20 }}</div>
+                            <div class="eclass"><a href="#">
+                                <img src="{% static 'images/Vector-eclass.png' %}" style="width:70%;"></a></div>
+                            <div class="remove"><a href="#">
+                                <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                            </div>
+                        </div>
+                        <br>
+                    {% endif %}
+                {% empty %}
+                    <h>추가된 과제를<br>모두 확인했습니다</h>
+                {% endfor %}
+            </div>
+
+
+            <!-- 마감기한이 임박한 일정 -->
+            <div class="col-6">
+                <h1>CHECK THIS</h1><br>
+
+                {% if Post.is_deadline_today %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h3>{{ Post.post.title|truncatechars:13 }}</h3>
+                        <button>알림삭제</button>
+                    </form>
+                {% else %}
+                {% endif %}
+
+                {% for item in check_this_content %}
+                    {% if item.is_deadline_today %}
+                    <div class="container">
+                        <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
+                        <div class="title">{{ item.post.title|truncatechars:13 }}</div>
+                        <div class="detail"><a href="#">
+                            <img src="{% static 'images/Vector-detail.png' %}" style="width:70%;"></a></div>
+                        <div class="deadline">
+                            {{ item.post.deadline|timeuntil }} 남음</div>
+                        <div class="remove"><a href="#">
+                            <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                        </div>
+                    </div>
+                    <br>
+                    {% else %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
