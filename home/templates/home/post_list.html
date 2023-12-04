@@ -1,23 +1,18 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block main_area %}
+
 <div class="row mx-5">
     <div class="col-4 mt-3 mb-5">
         <div id="title" style="font-size: 50px">
             <div style="margin-bottom: -15px">Check</div>
             <div style="margin-bottom: -15px">Your</div>
             <div>
-                Deadline<img
-                    src="{% static 'img/home_notice.png' %}"
-                    style="width: 40px; height: 40px; margin-left: 5px"
-            />
+                Deadline<img src="{% static 'img/home_notice.png' %}" style="width: 40px; height: 40px; margin-left: 5px"/>
             </div>
         </div>
         <div id="categoryBox" style="width: 250px">
-            <div
-                    id="categoryTitle"
-                    style="width: 190px; margin: 30px 30px 20px 30px"
-            >
+            <div id="categoryTitle" style="width: 190px; margin: 30px 30px 20px 30px">
                 <p style="margin: 20px 0px 0px 0px">YOUR</p>
                 <p style="margin: 0px 0px 20px 0px">CATEGORY</p>
             </div>
@@ -28,44 +23,48 @@
                 </li>
                 {% endfor %}
                 <li>
-                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">미분류 ({{ no_categories_post_count }})</a>
+                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">e-class ({{ no_categories_post_count }})</a>
                 </li>
             </ul>
         </div>
     </div>
     <div class="col-8 mt-3 mb-5">
         <div class="listBox" style="position: relative;">
-            <div class="controll">
-                <a href="#" id="before" onclick="before"
-                ><img
-                        src="{% static 'img/home_before.png' %}"
-                        style="width: 40px"
-                /></a>
+            <form class="controll" method="get" action="{% url 'home:change_date_next' %}">
+                {% csrf_token %}
+                <button id="before" name="prev" type="submit">
+                    <img src="{% static 'img/home_before.png' %}" style="width: 40px"/>
+                </button>
                 <div id="date" style="font-weight: 700;">{{ today }}</div>
-                <a href="#" id="after" onclick="after"
-                ><img
-                        src="{% static 'img/home_after.png' %}"
-                        style="width: 40px"
-                /></a>
-            </div>
+                <button id="after" name="next" type="submit">
+                    <img src="{% static 'img/home_after.png' %}" style="width: 40px"/>
+                </button>
+            </form>
             <div class="todoBox">
-                {% if post_list.exists %}
-                    {% for p in post_list %}
-                        {% if p.deadline.date == today.date %}
-                        <form class="todo" style="margin-bottom:10px" method="post" action="{% url 'todo_check' pk=p.pk %}">
-                            {% csrf_token %}
-                            <button type="submit" id="checkBtn"
-                                    style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
-                                {% if p.complete %}
-                                <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
+                {% if post_list_today.exists %}
+                    {% for p in post_list_today %}
+                    <form class="todo" style="margin-bottom:10px" method="post" action="{% url 'home:todo_check' pk=p.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
+                            {% if p.complete %}
+                            <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
+                            {% else %}
+                            <img src="{% static 'img/home_incom.png' %}" alt="InComplete" id="todoIconInCom"/>
+                            {% endif %}
+                        </button>
+                        <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:8 }}</a>
+                        <div id="todoDeadline">
+                            {% if p.complete == False %}
+                                {% if p.deadline|timeuntil|first == '0' %}
+                                    (over {{ p.deadline|timesince }})
                                 {% else %}
-                                <img src="{% static 'img/home_incom.png' %}" alt="InComplete" id="todoIconInCom"/>
+                                    ({{ p.deadline|timeuntil }})
                                 {% endif %}
-                            </button>
-                            <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:8 }}</a>
-                            <div id="todoDeadline">({{ p.deadline|timeuntil|cut:"," }})</div>
-                        </form>
-                        {% endif %}
+                                {% else %}
+                                    <span style="color: #17DC1F;">(Done)</span>
+                            {% endif %}
+                        </div>
+                    </form>
                     {% endfor %}
                 {% else %}
                 <div class="empty">
@@ -74,16 +73,14 @@
                         <p style="margin: 0; text-align: center">YOUR</p>
                         <p style="margin: 0; text-align: center">DEADLINE!</p>
                     </div>
-                    <a id="add" href="/home/add_list/"
-                    ><img
-                            src="{% static 'img/home_add.png' %}"
-                            style="width: 130px"
-                    /></a>
+                    <a id="add" href="/home/add_list/">
+                        <img src="{% static 'img/home_add.png' %}" style="width: 130px"/>
+                    </a>
                 </div>
                 {% endif %}
             </div>
             <a id="small_add" href="/home/add_list/" style="position: absolute; right: 60px; bottom: 30px; width: 40px;">
-                    <img src="{% static 'img/home_add.png' %}" style="width: 40px"/>
+                <img src="{% static 'img/home_add.png' %}" style="width: 40px"/>
             </a>
         </div>
     </div>

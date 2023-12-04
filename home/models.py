@@ -1,7 +1,9 @@
 from django.db import models
+from join.models import User
 import os
-from eclass.models import Lecture, Activity, Assignment, Quiz
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
@@ -25,19 +27,13 @@ class Post(models.Model):
     # 완료 여부
     complete = models.BooleanField(default=False)
     # 리스트 만든 날짜
-    # created_at = models.DateTimeField(auto_now_add=True)
-
-    # 이클래스 모델 불러오기
-    # lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
-    # activity = models.ForeignKey(Activity, null=True, blank=True, on_delete=models.SET_NULL)
-    # assignment = models.OneToOneField(Assignment, null=True, blank=True, on_delete=models.SET_NULL)
-    # quiz = models.OneToOneField(Quiz, null=True, blank=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
         return f'[{self.pk}] {self.title}'
 
     def get_absolute_url(self):
-        return f'../../home/check_details_{self.pk}/'
+        return f'../../../home/check_details_{self.pk}/'
 
 class My(models.Model):
     users = models.ManyToManyField(Category, related_name='my')
