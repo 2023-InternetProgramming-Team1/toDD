@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.views.generic import TemplateView
-app_name = 'home'
+
 urlpatterns = [
     path('delete_<int:pk>/', views.postDelete, name='postDelete'),
     path('edit_list_<int:pk>/', views.postEdit, name='postEdit'),
