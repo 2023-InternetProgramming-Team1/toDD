@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, View
 from .forms import PostForm
 from .models import Post, Category
 
-from datetime import datetime, time, timedelta
+from datetime import datetime,time
 from django.utils.dateformat import DateFormat
 from django.utils import timezone
 from django.http import HttpResponseRedirect
@@ -13,17 +13,11 @@ def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
+    print(f'Todo with ID {pk} updated: complete={todo.complete}')
+    return redirect('post_list')
 
     referer = request.META.get('HTTP_REFERER', '/')
     return HttpResponseRedirect(referer)
-
-def todo_check_category(request, pk, slug):
-    category = get_object_or_404(Category, slug=slug)
-    todo = get_object_or_404(Post, pk=pk)
-    todo.complete = not todo.complete
-    todo.save()
-    return redirect('category', slug=category.slug)
-
 
 def todo_check_category(request, pk, slug):
     category = get_object_or_404(Category, slug=slug)
@@ -40,12 +34,12 @@ def todo_check_no_category(request, pk):
 
 
 def todo_check2(request, pk):
+
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
     print(f'Todo with ID {pk} updated: complete={todo.complete}')
     return redirect(f'../../../home/check_details_{pk}/')
-
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -110,11 +104,7 @@ class PostList(ListView):
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
 
-        # 변경 날짜 저장
-        self.request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
-
         return context
-
 
 class CategoryList(ListView):
     def get_context_data(self, **kwargs):
@@ -122,7 +112,6 @@ class CategoryList(ListView):
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
         return context
-
 
 class PostDetail(DetailView):
     model = Post
@@ -148,7 +137,7 @@ def postCreate(request):
 
 def postEdit(request, pk):
     post = Post.objects.get(id=pk)
-    if request.method == "POST":  # 글을 수정사항을 입력하고 제출을 눌렀을 때
+    if request.method == "POST": # 글을 수정사항을 입력하고 제출을 눌렀을 때
         form = PostForm(request.POST)
         if form.is_valid():
             post.title = form.cleaned_data['title']
@@ -157,7 +146,7 @@ def postEdit(request, pk):
             post.category = form.cleaned_data['category']
             post.save()
         return redirect(post)
-    else:  # 수정사항을 입력하기 위해 페이지에 처음 접속했을 때
+    else: # 수정사항을 입력하기 위해 페이지에 처음 접속했을 때
         form = PostForm(instance=post)
         context = {
             'form': form,
@@ -171,6 +160,11 @@ def postDelete(request, pk):
     post = Post.objects.get(id=pk)
     post.delete()
     return redirect('../../home/')
+
+def popup(request):
+    post_content = Post.objects.all()
+    return render(request, 'home/popup.html', {'post_content': post_content})
+
 
 def my(request):
     today = datetime.now()
@@ -205,3 +199,14 @@ def my(request):
         context
     )
 
+def get_weekday_number(day):
+    # 요일 문자열을 받아 해당하는 숫자를 반환하는 함수
+    weekdays = ['월', '화', '수', '목', '금', '토', '일']
+    return weekdays.index(day) + 1
+
+def my_view(request, day):
+    # 요청된 요일에 해당하는 완료된 과제들을 가져옴
+    weekday_number = get_weekday_number(day)
+    weekday_posts = Post.objects.filter(complete=True, deadline__week_day=weekday_number)
+
+    return render(request, 'home/my.html', {'weekday_posts': weekday_posts, 'selected_day': day})

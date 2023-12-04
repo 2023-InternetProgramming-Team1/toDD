@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block main_area %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/creation_styles.css' %}">
 
-    <h1>Create Quiz</h1>
+<div class="container my-4">
+  <h2 class="body-title">퀴즈</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="assignment-fields">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+        </div>
+        <div class="assignment-fields">
+            {{ form.questions.label_tag }}
+            {{ form.questions }}
+        </div>
+        <h2 class="body-title">제출 기한 설정</h2>
+        <div class="assignment-fields">
+            {{ form.due_date.label_tag }}
+            {{ form.due_date }}
+        </div>
         <button type="submit">저장</button>
     </form>
+</div>
 {% endblock %}
