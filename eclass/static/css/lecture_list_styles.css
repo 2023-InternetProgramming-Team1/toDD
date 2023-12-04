@@ -1,0 +1,61 @@
+/* lecture_list_styles.css */
+
+/* Add your custom styles for the lecture_list page */
+
+body {
+  background-color: #F7F9FA; /* Light gray background color */
+}
+
+h4 {
+  color: #1E5BAA; /* Blue text color */
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+}
+
+ul li {
+  border: 1px solid #ddd; /* Add border to each list item */
+  background-color: #fff; /* White background color */
+  margin-bottom: 10px; /* Add margin between list items */
+  padding: 15px; /* Add padding to each list item */
+}
+
+ul li a {
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically in the anchor */
+  text-decoration: none; /* Remove underline from the anchor */
+  color: #000; /* Set text color to black */
+}
+
+#profile {
+  width: 60px; /* Set the width of the image */
+  height: auto; /* Maintain the aspect ratio of the image */
+  margin-right: 15px; /* Add margin between image and text */
+}
+
+#lect {
+  width: 80px; /* Set the width of the image */
+  height: auto; /* Maintain the aspect ratio of the image */
+  margin-right: 10px; /* Add margin between image and text */
+}
+
+ul li div {
+  flex: 1; /* Allow the div to grow and take up remaining space */
+}
+
+ul li div p {
+  margin: 0; /* Remove default margin for paragraphs */
+}
+
+ul li div p:first-child {
+  color: #000; /* Set text color of the first paragraph to black */
+  font-weight: bold; /* Set font weight to bold for the first paragraph */
+}
+
+ul li div p:last-child {
+  color: #666; /* Set text color of the last paragraph to gray */
+  font-size: 0.8em; /* Set font size to 80% for the last paragraph */
+}

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Lecture(models.Model):
     name = models.CharField(max_length=100)
+    professor = models.CharField(max_length=30)
 
 class Activity(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
