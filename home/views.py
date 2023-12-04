@@ -3,8 +3,9 @@ from django.views.generic import ListView, DetailView, View
 
 from .forms import PostForm
 from .models import Post, Category
+from eclass.models import Assignment, Quiz
 
-from datetime import datetime,time
+from datetime import datetime,timedelta, time
 from django.utils.dateformat import DateFormat
 from django.utils import timezone
 from django.http import HttpResponseRedirect
@@ -13,8 +14,6 @@ def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
-    print(f'Todo with ID {pk} updated: complete={todo.complete}')
-    return redirect('post_list')
 
     referer = request.META.get('HTTP_REFERER', '/')
     return HttpResponseRedirect(referer)
@@ -24,13 +23,13 @@ def todo_check_category(request, pk, slug):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
-    return redirect('category', slug=category.slug)
+    return redirect('home:category', slug=category.slug)
 
 def todo_check_no_category(request, pk):
     todo = get_object_or_404(Post, pk=pk, category=None)
     todo.complete = not todo.complete
     todo.save()
-    return redirect('category', slug='no_category')
+    return redirect('home:category', slug='no_category')
 
 
 def todo_check2(request, pk):
@@ -61,12 +60,34 @@ def category_page(request, slug):
         }
     )
 
+def createEclassPost(title, content, deadline, activity):
+    return Post.objects.create(
+        title=str('['+activity.lecture.name+'] ')+title,
+        content=content,
+        deadline=deadline,
+        complete=False,
+        category=None,
+    )
+
 class PostList(ListView):
     model = Post
     ordering = '-pk'
 
+    assignments = Assignment.objects.all()
+    quizzes = Quiz.objects.all()
+
+    for assignment in assignments:
+        if not Post.objects.filter(title=str('[' + assignment.activity.lecture.name + '] ') + assignment.title,
+                                   content=assignment.content,
+                                   deadline=assignment.due_date).exists():
+            createEclassPost(assignment.title, assignment.content, assignment.due_date,assignment.activity)
+    for quiz in quizzes:
+        if not Post.objects.filter(title=str('[' + quiz.activity.lecture.name + '] ') + quiz.title,
+                                   content=quiz.questions, deadline=quiz.due_date).exists():
+            createEclassPost(quiz.title, quiz.questions, quiz.due_date, quiz.activity)
+
     def get_context_data(self, **kwargs):
-        context = super(PostList, self).get_context_data(**kwargs)
+        context = super(PostList, self).get_context_data()
 
         # 이전 날짜
         stored_date_str = self.request.session.get('stored_date')
@@ -104,11 +125,14 @@ class PostList(ListView):
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
 
+        # 변경 날짜 저장
+        self.request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
+
         return context
 
 class CategoryList(ListView):
     def get_context_data(self, **kwargs):
-        context = super(PostList, self).get_context_data()
+        context = super().get_context_data()
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
         return context
