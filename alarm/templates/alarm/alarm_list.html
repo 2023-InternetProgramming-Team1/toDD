@@ -8,62 +8,62 @@
             <!-- 이클래스에 추가된 과제 -->
             <div class="col-6">
                 <h1>UPDATED</h1><br>
-                {% for p in post_list %}
-                    {% if p.is_created_today %}
+                {% for item in updated_content %}
+                    {% if item.assignment != null %}
                         <div class="container">
                             <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
-                            <div class="title">{{ p.title|truncatechars:25 }}</div>
-                            <div class="detail"><a href="{{ p.get_absolute_url }}">
-                              <img src="{% static 'images/Vector-detail.png' %}" style="width:70%;"></a></div>
-                            <div class="remove">
-                                <a href="{{p.pk}}/remove"><img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                            <div class="title">{{ item.assignment.title|truncatechars:20 }}</div>
+                            <div class="eclass"><a href="{{ item.get_absolute_url }}">
+                                <img src="{% static 'images/Vector-eclass.png' %}" style="width:70%;"></a></div>
+                            <div class="remove"><a href="{{item.pk}}/remove_assignment">
+                                <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
                             </div>
-
                         </div>
                         <br>
-                    {% else %}
                     {% endif %}
+                    {% if item.quiz != null %}
+                        <div class="container">
+                            <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
+                            <div class="title">{{ item.quiz.title|truncatechars:20 }}</div>
+                            <div class="eclass"><a href="{{ item.get_absolute_url }}">
+                                <img src="{% static 'images/Vector-eclass.png' %}" style="width:70%;"></a></div>
+                            <div class="remove"><a href="{{item.pk}}/remove_quiz">
+                                <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                            </div>
+                        </div>
+                        <br>
+                    {% endif %}
+                {% empty %}
+                    <h>추가된 과제를<br>모두 확인했습니다</h>
                 {% endfor %}
-
-
             </div>
+
+
 
             <!-- 마감기한이 임박한 일정 -->
             <div class="col-6">
                 <h1>CHECK THIS</h1><br>
-                {% for p in post_list %}
-                    {% if p.is_deadline_today %}
+                {% for item in check_this_content %}
+                    {% if item.is_deadline_today %}
                         <div class="container">
                             <img src="{% static 'images/Rectangle.png' %}" style="width:100%;">
-                            <div class="title">{{ p.title|truncatechars:13 }}</div>
-                            <div class="detail"><a href="{{ p.get_absolute_url }}">
-                              <img src="{% static 'images/Vector-detail.png' %}" style="width:70%;"></a></div>
-                            <div class="deadline">
-                              {{ p.deadline|timeuntil }} 남음</div>
-                            <div class="remove">
-                                <a href="{{p.pk}}/remove"><img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
+                            <div class="title">{{ item.post.title|truncatechars:12 }}</div>
+                            <div class="deadline">{{ item.post.deadline|timeuntil }} 남음</div>
+                            <div class="detail"><a href="{{ item.post.get_absolute_url }}">
+                                <img src="{% static 'images/Vector-detail.png' %}" style="width:70%;"></a></div>
+                            <div class="remove"><a href="{{item.pk}}/remove_check_this">
+                                <img src="{% static 'images/octicon_x.png' %}" style="width:70%;"></a>
                             </div>
                         </div>
                         <br>
-                    {% else %}
                     {% endif %}
+                {% empty %}
+                    <h>임박한 일정을<br>모두 확인했습니다</h>
                 {% endfor %}
+
             </div>
         </div>
     </div>
 
-    {% for p in post_list %}
-        {% empty %}
-            <h>모든 알림을<br>확인했습니다</h>
-    {% endfor %}
-
-
-
-    <!-- 팝업창 띄우기-->
-    <script language="javascript">
-
-             window.open("/alarm/popup","팝업 이름","width=300,height=300, left=300, top=300");
-
-    </script>
 
 {% endblock %}

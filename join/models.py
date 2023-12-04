@@ -7,16 +7,22 @@ from django.db import models
 class User(AbstractUser):
     username = models.CharField(max_length=100, blank=True, null=True, unique=True)
     studentId = models.IntegerField(blank=True, null=True,unique=True)
-    password = models.IntegerField(blank=True, null=True,unique=True)
+    number = models.IntegerField(blank=True, null=True,unique=True)
 
     def __str__(self):
         return f"{self.username} - {self.studentId}"
 
 
-class Login(models.Model):
-    users = models.ManyToManyField(User, related_name='logins')
-    login_path = models.CharField(max_length=100, default='join/login.html')
+class login(models.Model):
+    users = models.ManyToManyField(User, related_name='login')
+    login='join/login.html'
 
-class Signup(models.Model):
-    users = models.ManyToManyField(User, related_name='signup')
-    signup_path = models.CharField(max_length=100, default='join/signup.html')
+class account(models.Model):
+    users = models.ManyToManyField(User, related_name='account')
+    account='join/account.html'
+
+class mypage(models.Model):
+    users = models.ManyToManyField(User, related_name='mypage')
+    mypage='join/mypage.html'
+
+

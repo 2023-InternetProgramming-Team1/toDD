@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-md-1">
                     <div class="row my-1 py-3 col px-1">
-                        <form method="post" action="{% url 'home:todo_check2' post.pk %}">
+                        <form method="post" action="{% url 'todo_check2' post.pk %}">
                             {% csrf_token %}
                                 <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-left: 10px;">
                                     {% if post.complete %}
@@ -35,7 +35,7 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-1">
                     <div class="row pt-2 col pe-3">
-                        <a href="{% url 'home:postDelete' post.id %}" role="button">
+                        <a href="{% url 'postDelete' post.id %}" role="button">
                             <img src="{% static 'img/delete_icon.png' %}" width="90%" height="90%" alt="delete">
                         </a>
                     </div>
