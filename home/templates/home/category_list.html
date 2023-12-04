@@ -32,7 +32,7 @@
                 </li>
                 {% endfor %}
                 <li>
-                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">미분류 ({{ no_categories_post_count }})</a
+                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">e-class ({{ no_categories_post_count }})</a
 >
                 </li>
             </ul>
@@ -50,7 +50,7 @@
                 {% if post_list.exists %}
 
                     {% for p in post_list %}
-                        <form class="todo" style="margin-bottom:10px" method="post" action="{% if category == '미분류' %}{% url 'todo_check_no_category' pk=p.pk %}{% else %}{% url 'todo_check_category' pk=p.pk slug=category.slug %}{% endif %}">
+                        <form class="todo" style="margin-bottom:10px" method="post" action="{% if category == 'e-class' %}{% url 'home:todo_check_no_category' pk=p.pk %}{% else %}{% url 'home:todo_check_category' pk=p.pk slug=category.slug %}{% endif %}">
                             {% csrf_token %}
                                 <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
                                     {% if p.complete %}
@@ -60,7 +60,17 @@
                                     {% endif %}
                                 </button>
                                 <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:8 }}</a>
-                                <div id="todoDeadline">( {{ p.deadline }})</div>
+                                <div id="todoDeadline">
+                                    {% if p.complete == False %}
+                                        {% if p.deadline|timeuntil|first == '0' %}
+                                            (over {{ p.deadline|timesince }})
+                                        {% else %}
+                                            ({{ p.deadline|timeuntil }})
+                                        {% endif %}
+                                    {% else %}
+                                        <span style="color: #17DC1F;">(Done)</span>
+                                    {% endif %}
+                                </div>
                         </form>
                     {% endfor %}
 

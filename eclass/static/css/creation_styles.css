@@ -1,0 +1,53 @@
+/* css/creation_styles.css */
+
+/* Add your custom styles for the assignment_creation page */
+
+body {
+  background-color: #F7F9FA;
+  margin: 0;
+}
+
+.body-title {
+  margin-top: 50px; /* h2와 이전 요소 간격 조절 */
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd; /* 구분선 스타일 지정 */
+  padding-bottom: 10px; /* 아래 여백 추가 */
+  color: #1E5BAA; /* 텍스트 색상 지정 */
+}
+
+form {
+  margin-top: 30px; /* Add some padding for better visual separation */
+  padding: 5px;
+}
+
+button {
+  background-color: #1E5BAA;
+  color: #fff;
+  padding: 5px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right; /* Align button to the right */
+  margin-top: 10px; /* Add some top margin for better spacing */
+}
+
+textarea {
+  resize: vertical; /* 수직 크기 조절만 허용 */
+}
+
+.custom-textarea {
+  display: block;
+  width: 100%;
+  margin-top: 10px; /* 내용과 레이블 사이 간격 조절 */
+}
+
+/* due_date 필드의 스타일 지정 */
+.custom-due-date {
+  display: block;
+  width: 100%;
+  margin-top: 20px; /* content 필드와의 간격 조절 */
+}
+
+.assignment-fields {
+  margin-bottom: 25px; /* 각 필드 사이 간격 조절 */
+}

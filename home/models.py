@@ -1,6 +1,6 @@
 from django.db import models
+from join.models import User
 import os
-from eclass.models import Lecture, Activity, Assignment, Quiz
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 
@@ -33,7 +33,7 @@ class Post(models.Model):
         return f'[{self.pk}] {self.title}'
 
     def get_absolute_url(self):
-        return f'../../home/check_details_{self.pk}/'
+        return f'../../../home/check_details_{self.pk}/'
 
 class My(models.Model):
     users = models.ManyToManyField(Category, related_name='my')
