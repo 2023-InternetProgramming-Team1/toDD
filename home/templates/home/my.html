@@ -120,14 +120,36 @@
                 <div class="day">월요일</div>
                 <div class="date">{{ monday }}</div>
                 <div class="text">
-                    내용
+                    {% if monday_posts %}
+                    <ul>
+                        {% for post in monday_posts %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            <p>{{ post.content }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>완료된 과제가 없습니다.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="box">
                 <div class="day">화요일</div>
                 <div class="date">{{ tuesday }}</div>
                 <div class="text">
-                    내용
+                    {% if tuesday_posts %}
+                    <ul>
+                        {% for post in tuesday_posts %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            <p>{{ post.content }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>완료된 과제가 없습니다.</p>
+                    {% endif %}
                 </div>
             </div>
 
@@ -135,35 +157,90 @@
                 <div class="day">수요일</div>
                 <div class="date">{{ wednesday }}</div>
                 <div class="text">
-                    내용
+                    {% if tuesday_posts %}
+                    <ul>
+                        {% for post in tuesday_posts %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            <p>{{ post.content }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>완료된 과제가 없습니다.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="box">
                 <div class="day">목요일</div>
                 <div class="date">{{ thursday }}</div>
                 <div class="text">
-                    내용
+                    {% if thursday_posts %}
+                    <ul>
+                        {% for post in thursday_posts %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            <p>{{ post.content }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>완료된 과제가 없습니다.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="box">
                 <div class="day">금요일</div>
                 <div class="date">{{ friday }}</div>
                 <div class="text">
-                    내용
+                    {% if friday_posts %}
+                    <ul>
+                        {% for post in friday_posts %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            <p>{{ post.content }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>완료된 과제가 없습니다.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="box">
                 <div class="day" >토요일</div>
                 <div class="date" style="color: blue;">{{ saturday }}</div>
                 <div class="text">
-                    내용
+                    {% if saturday_posts %}
+                    <ul>
+                        {% for post in saturday_posts %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            <p>{{ post.content }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>완료된 과제가 없습니다.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="box">
                 <div class="day">일요일</div>
                 <div class="date" style="color: red;">{{ sunday }}</div>
                 <div class="text">
-                    내용
+                    {% if sunday_posts %}
+                    <ul>
+                        {% for post in sunday_posts %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            <p>{{ post.content }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>완료된 과제가 없습니다.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="box">

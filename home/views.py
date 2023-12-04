@@ -151,3 +151,13 @@ def my(request):
         context
     )
 
+def get_weekday_number(day):
+    weekdays = ['월', '화', '수', '목', '금', '토', '일']
+    return weekdays.index(day) + 1
+
+def my_view(request, day):
+    weekday_number = get_weekday_number(day)
+    weekday_posts = Post.objects.filter(complete=True, deadline__week_day=weekday_number)
+
+    return render(request, 'home/my.html', {'weekday_posts': weekday_posts, 'selected_day': day})
+
