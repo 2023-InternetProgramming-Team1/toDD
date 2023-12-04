@@ -20,12 +20,12 @@
       <div class="activity-box">
         <p class="activity-title">{{ activity.title }}</p>
         <ul>
-          {% if activity.assignment %}
-            <li>Assignment: {{ activity.assignment.title }}</li>
-          {% endif %}
-          {% if activity.quiz %}
-            <li>Quiz: {{ activity.quiz.title }}</li>
-          {% endif %}
+          {% for assignment in activity.assignment_set.all %}
+            <li>과제: {{ assignment.title }}</li>
+          {% endfor %}
+          {% for quiz in activity.quiz_set.all %}
+            <li>퀴즈: {{ quiz.title }}</li>
+          {% endfor %}
         </ul>
         <div class="add-activity">
           <a href="{% url 'activity_detail' activity.id %}" class="btn btn-success">+ 활동 추가</a>

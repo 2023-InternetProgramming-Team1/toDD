@@ -27,7 +27,7 @@ def assignment_creation(request, activity_id):
             assignment.due_date = form.cleaned_data['due_date']
             assignment.activity = activity
             assignment.save()
-            return redirect('activity_detail', activity_id=activity_id)
+            return redirect('lecture_detail', lecture_id=activity.lecture.id)
     else:
         form = AssignmentForm()
 
@@ -46,7 +46,7 @@ def quiz_creation(request, activity_id):
             quiz.due_date = form.cleaned_data['due_date']
             quiz.activity = activity
             quiz.save()
-            return redirect('activity_detail', activity_id=activity_id)
+            return redirect('lecture_detail', lecture_id=activity.lecture.id)
     else:
         form = QuizForm()
 
