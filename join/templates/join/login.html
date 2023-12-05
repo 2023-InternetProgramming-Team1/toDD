@@ -134,9 +134,9 @@
 
         <!-- 로그인 폼 추가 -->
         <div class="login-container">
-            <form method="post" action="{% url 'home:my' %}" class="custom-form">
+            <form method="post" action="/home/" class="custom-form">
                 {% csrf_token %}
-                <input type="password" name="{{ form.password.name }}" placeholder="학번" class="custom-input-studentId" required>
+                <input type="password" name="{{ form.studentId.name }}" placeholder="학번" class="custom-input-studentId" required>
                 <input type="password" name="{{ form.password.name }}" placeholder="비밀번호" class="custom-input-password" required>
 
                 <button type="submit" class="custom-button" onclick="login()">로그인</button>
