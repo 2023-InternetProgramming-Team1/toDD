@@ -20,7 +20,7 @@ urlpatterns = [
     path('category/<str:slug>/todo_check_category/<int:pk>/', views.todo_check_category, name='todo_check_category'),
     path('category/no_category/<int:pk>/', views.todo_check_no_category, name='todo_check_no_category'),
     # 날짜 넘기기
-    path('change_date_next/', views.PostList.as_view(), name='change_date_next'),
+    path('change_date/', views.change_date, name='change_date'),
     # 컴플리트(상세확인)
     path('todo_check2/<int:pk>/', views.todo_check2, name='todo_check2'),
 

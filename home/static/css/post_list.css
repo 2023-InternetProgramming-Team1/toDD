@@ -51,12 +51,16 @@
 }
 
 #before {
+    background: none;
+    border: none;
     width: 40px;
     margin: 12px 0px 0px 0px;
     padding: 0;
 }
 
 #after {
+    background: none;
+    border: none;
     width: 40px;
     margin: 12px 0px 0px 0px;
     padding: 0;
