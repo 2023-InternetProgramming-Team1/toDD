@@ -1,283 +1,269 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-    <head>
-        <title>MyPage</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
+<head>
+    <title>My</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
             href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
             rel="stylesheet"
-        />
-        <link
-            href="{% static 'join/bootstrap/bootstrap.min.css' %}"
+    />
+    <link
+            href="{% static 'home/bootstrap/bootstrap.min.css' %}"
             rel="stylesheet"
             media="screen"
-        />
-        <script
+    />
+    <script
             src="https://kit.fontawesome.com/726bbd6862.js"
             crossorigin="anonymous"
-        ></script>
-        <link
-            href="{% static 'css/mypage.css' %}"
+    ></script>
+    <link
+            href="{% static 'css/post_list.css' %}"
             rel="stylesheet"
             media="screen"
-        />
-        <style>
-            .list {
-                margin-top:20px;
-                color: #2D3142;
-                text-align: center;
-                font-family: Inter;
-                font-size: 40px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                margin-bottom:20px;
-            }
-            .container {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 10px;
-            }
+    />
+    <style>
+        .list {
+            margin-top:30px;
+            color: #2d3142;
+            text-align: center;
+            font-family: Inter;
+            font-size: 60px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-top: 30px;
+            margin-bottom:5px;
+        }
+        .list_container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin:20px;
+            margin-left:40px;
+        }
 
-            .box {
-                text-align: center;
-                margin-top: 20px;
-                background-color: #FFF7D3;
-                width: 300px;
-                height: 225px;
-                flex-shrink: 0;
-                border-radius: 50px;
-            }
-            .date {
-                color: #000;
-                text-align: center;
-                font-family: Inter;
-                font-size: 32px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-            }
-        </style>
-    </head>
-    <body
+        .box {
+            text-align: center;
+            margin-top: 10px;
+            background-color: #FFF7D3;
+            width: 320px;
+            height: 210px;
+            flex-shrink: 0;
+            border-radius: 50px;
+            margin-bottom:5px;
+        }
+
+        .date {
+            color: #000;
+            text-align: center;
+            font-family: Inter;
+            font-size: 27px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom:5px;
+        }
+
+        .day{
+            margin-top:10px;
+        }
+        .text a {
+            text-decoration: none;
+            font-size: 18px;
+            font-color: #2D3142;
+            font-weight: bold;
+        }
+
+        hr {
+            border: 2px solid #000; /* 두께가 2px이고 검은색 선 */
+        }
+    </style>
+</head>
+<body
         class="d-flex flex-column min-vh-100"
         style="
             background-color: #fffff4;
             color: #2d3142;
             font-family: 'Inter', sans-serif;
         "
-    >
+>
 
-        <!-- NavBar -->
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #2D3142;">
-        <div class="container">
-            <a class="navbar-brand" href="/home/">
-                <img src="{% static 'img/logo.png' %}" alt="Bootstrap" width="130.22" height="50">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item active ms-3">
-                        <a class="navbar-brand" href="/home/" style="color: #FFFFF4;">
-                            <img src="{% static 'img/nav_home.png' %}" alt="HOME" width="25" height="25" class="d-inline-block align-text-top me-1">
-                            HOME
-                        </a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="navbar-brand" href="/home/my/" style="color: #FFFFF4;">
-                            <img src="{% static 'img/nav_my.png' %}" alt="MY" width="25" height="25" class="d-inline-block align-text-top me-1">
-                            MY
-                        </a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="navbar-brand" href="/eclass/" style="color: #FFFFF4;">
-                            <img src="{% static 'img/nav_eclass.png' %}" alt="ECLASS" width="25" height="25" class="d-inline-block align-text-top me-1">
-                            E-CLASS
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown ms-2">
-                        <a class="navbar-brand" href="/" style="color: #FFFFF4;">
-                            <img src="{% static 'img/nav_login.png' %}" alt="LOGIN" width="25" height="25" class="d-inline-block align-text-top me-1">
-                            LOG OUT
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="navbar-brand" href="/alarm/" style="color: #FFFFF4;">
-                            <img src="{% static 'img/nav_alarm.png' %}" alt="Bootstrap" width="23" height="25">
-                        </a>
-                    </li>
-                </ul>
+<!-- NavBar -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #2D3142;">
+    <div class="container">
+        <a class="navbar-brand" href="/home/">
+            <img src="{% static 'img/logo.png' %}" alt="Bootstrap" width="130.22" height="50">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active ms-3">
+                    <a class="navbar-brand" href="/home/" style="color: #FFFFF4;">
+                        <img src="{% static 'img/nav_home.png' %}" alt="HOME" width="25" height="25"
+                             class="d-inline-block align-text-top me-1">
+                        HOME
+                    </a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a class="navbar-brand" href="/home/my/" style="color: #FFFFF4;">
+                        <img src="{% static 'img/nav_my.png' %}" alt="MY" width="25" height="25"
+                             class="d-inline-block align-text-top me-1">
+                        MY
+                    </a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a class="navbar-brand" href="/eclass/" style="color: #FFFFF4;">
+                        <img src="{% static 'img/nav_eclass.png' %}" alt="ECLASS" width="25" height="25"
+                             class="d-inline-block align-text-top me-1">
+                        E-CLASS
+                    </a>
+                </li>
+                <li class="nav-item dropdown ms-2">
+                    <a class="navbar-brand" href="/join/login/" style="color: #FFFFF4;">
+                        <img src="{% static 'img/nav_login.png' %}" alt="LOGIN" width="25" height="25"
+                             class="d-inline-block align-text-top me-1">
+                        LOG OUT
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="navbar-brand" href="/alarm/" style="color: #FFFFF4;">
+                        <img src="{% static 'img/nav_alarm.png' %}" alt="Bootstrap" width="23" height="25">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="list">Weeekly List</div>
+<!-- 페이지 내용 작성-->
+<div class="list_container">
+    <div class="box">
+        <div class="day">월요일</div>
+        <div class="date">{{ monday }}</div>
+        <div class="text">
+            <hr>
+            {% if monday_posts.exists %}
+            {% for post in monday_posts %}
+            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="box">
+        <div class="day">화요일</div>
+        <div class="date">{{ tuesday }}</div>
+        <div class="text">
+            <hr>
+            {% if tuesday_posts.exists %}
+            {% for post in monday_posts %}
+            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="day">수요일</div>
+        <div class="date">{{ wednesday }}</div>
+        <div class="text">
+            <hr>
+            {% if wednesday_posts.exists %}
+            {% for post in wednesday_posts %}
+            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="box">
+        <div class="day">목요일</div>
+        <div class="date">{{ thursday }}</div>
+        <div class="text">
+            <hr>
+            {% if thursday_posts.exists %}
+            {% for post in thursday_posts %}
+            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="box">
+        <div class="day">금요일</div>
+        <div class="date">{{ friday }}</div>
+        <div class="text">
+            <hr>
+            {% if friday_posts.exists %}
+            {% for post in friday_posts %}
+            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="box">
+        <div class="day">토요일</div>
+        <div class="date" style="color: blue;">{{ saturday }}</div>
+        <div class="text">
+            <hr>
+            {% if saturday_posts.exists %}
+            {% for post in saturday_posts %}
+            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="box">
+        <div class="day">일요일</div>
+        <div class="date" style="color: red;">{{ sunday }}</div>
+        <div class="text">
+            <hr>
+            {% if sunday_posts.exists %}
+            {% for post in sunday_posts %}
+            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="box">
+        <div class="date">
+            <div class="memo">
+                <br>
+                <br>
+                Do Your Best
             </div>
         </div>
-    </nav>
-        <div class="list">Weeekly Done List</div>
-        <!-- 페이지 내용 작성-->
-        <div class="container">
-            <div class="box">
-                <div class="day">월요일</div>
-                <div class="date">{{ monday }}</div>
-                <div class="text">
-                    {% if monday_posts %}
-                    <ul>
-                        {% for post in monday_posts %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <p>{{ post.content }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>완료된 과제가 없습니다.</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="box">
-                <div class="day">화요일</div>
-                <div class="date">{{ tuesday }}</div>
-                <div class="text">
-                    {% if tuesday_posts %}
-                    <ul>
-                        {% for post in tuesday_posts %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <p>{{ post.content }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>완료된 과제가 없습니다.</p>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="day">수요일</div>
-                <div class="date">{{ wednesday }}</div>
-                <div class="text">
-                    {% if tuesday_posts %}
-                    <ul>
-                        {% for post in tuesday_posts %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <p>{{ post.content }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>완료된 과제가 없습니다.</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="box">
-                <div class="day">목요일</div>
-                <div class="date">{{ thursday }}</div>
-                <div class="text">
-                    {% if thursday_posts %}
-                    <ul>
-                        {% for post in thursday_posts %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <p>{{ post.content }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>완료된 과제가 없습니다.</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="box">
-                <div class="day">금요일</div>
-                <div class="date">{{ friday }}</div>
-                <div class="text">
-                    {% if friday_posts %}
-                    <ul>
-                        {% for post in friday_posts %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <p>{{ post.content }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>완료된 과제가 없습니다.</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="box">
-                <div class="day" >토요일</div>
-                <div class="date" style="color: blue;">{{ saturday }}</div>
-                <div class="text">
-                    {% if saturday_posts %}
-                    <ul>
-                        {% for post in saturday_posts %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <p>{{ post.content }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>완료된 과제가 없습니다.</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="box">
-                <div class="day">일요일</div>
-                <div class="date" style="color: red;">{{ sunday }}</div>
-                <div class="text">
-                    {% if sunday_posts %}
-                    <ul>
-                        {% for post in sunday_posts %}
-                        <li>
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <p>{{ post.content }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>완료된 과제가 없습니다.</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="box">
-                <div class="day">없는 날짜</div>
-                <div class="date">
-                    Do Your Best
-                </div>
-            </div>
-        </div>
-        <!-- Footer -->
-        <footer class="py-2 mt-auto" style="background-color: #2d3142">
-            <div class="container d-flex justify-content-center" style="text-align: center" >
-                <a
-                    class="m-0 text-center"
-                    style="color: #fffff4; text-decoration: none"
-                    href="#"
-                >
-                Copyright &copy; ITZYMA 2023
-                </a>
-            </div>
-        </footer>
+    </div>
+</div>
+<!-- Footer -->
+<footer class="py-2 mt-auto" style="background-color: #2d3142">
+    <div class="container d-flex justify-content-center" style="text-align: center">
+        <a
+                class="m-0 text-center"
+                style="color: #fffff4; text-decoration: none"
+                href="#"
+        >
+            Copyright &copy; ITZYMA 2023
+        </a>
+    </div>
+</footer>
 
 
-        <script
-            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"
-        ></script>
-    </body>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"
+></script>
+</body>
 </html>
