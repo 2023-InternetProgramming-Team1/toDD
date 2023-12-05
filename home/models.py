@@ -1,7 +1,9 @@
 from django.db import models
-from django.utils import timezone
+from join.models import User
+
 import os
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
 
 class Category(models.Model):
@@ -19,6 +21,7 @@ class Category(models.Model):
     def get_absolute_url(self):
         return f'/home/category/{self.slug}'
 
+
 class Post(models.Model):
     # 투두 리스트 제목
     title = models.CharField(max_length=30)
@@ -31,20 +34,13 @@ class Post(models.Model):
     # 완료 여부
     complete = models.BooleanField(default=False)
     # 리스트 만든 날짜
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    # 이클래스 모델 불러오기
-    # lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
-    # activity = models.ForeignKey(Activity, null=True, blank=True, on_delete=models.SET_NULL)
-    # assignment = models.OneToOneField(Assignment, null=True, blank=True, on_delete=models.SET_NULL)
-    # quiz = models.OneToOneField(Quiz, null=True, blank=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
         return f'[{self.pk}] {self.title}'
 
     def get_absolute_url(self):
         return f'../../../home/check_details_{self.pk}/'
-
 
     def is_deadline_today(self):
         today = timezone.now()
@@ -54,8 +50,3 @@ class Post(models.Model):
 
         return 0 <= difference.total_seconds() <= 86400 and not self.complete
 
-
-
-# class mypage(models.Model):
-#     users = models.ManyToManyField(User, related_name='mypage_set')
-#     mypage='join/mypage.html'

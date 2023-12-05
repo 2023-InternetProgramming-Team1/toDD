@@ -6,7 +6,6 @@ from eclass.models import Assignment, Quiz
 from datetime import datetime, timedelta
 from django.utils.dateformat import DateFormat
 from django.utils import timezone
-
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from collections import deque
@@ -31,13 +30,12 @@ def todo_check2(request, pk):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
     todo.save()
-    print(f'Todo with ID {pk} updated: complete={todo.complete}')
     return redirect(f'../../../home/check_details_{pk}/')
 
 
 def category_page(request, slug):
     if slug == 'no_category':
-        category = '미분류'
+        category = 'e-class'
         post_list = Post.objects.filter(category=None)
     else:
         category = get_object_or_404(Category, slug=slug)
@@ -110,7 +108,7 @@ def todo_check(request, pk):
 class PostList(ListView):
     model = Post
     ordering = '-pk'
-
+    
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
 
@@ -201,7 +199,7 @@ def change_date(request, **kwargs):
 
 class CategoryList(ListView):
     def get_context_data(self, **kwargs):
-        context = super().get_context_data()
+        context = super(PostList, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
         return context
@@ -262,20 +260,55 @@ def popup(request):
 
 
 def my(request):
-    today = datetime.now()
+    today = timezone.now().date()
     current_weekday = today.weekday()
-
     # 현재 날짜에서 현재 요일을 기준으로 월요일을 계산
     monday_of_current_week = today - timedelta(days=current_weekday)
 
     # 각각의 날짜 변수에 값을 할당
-    monday = monday_of_current_week.strftime('%m/%d')
-    tuesday = (monday_of_current_week + timedelta(days=1)).strftime('%m/%d')
-    wednesday = (monday_of_current_week + timedelta(days=2)).strftime('%m/%d')
-    thursday = (monday_of_current_week + timedelta(days=3)).strftime('%m/%d')
-    friday = (monday_of_current_week + timedelta(days=4)).strftime('%m/%d')
-    saturday = (monday_of_current_week + timedelta(days=5)).strftime('%m/%d')
-    sunday = (monday_of_current_week + timedelta(days=6)).strftime('%m/%d')
+    monday = (monday_of_current_week).strftime('%Y-%m-%d')
+    tuesday = (monday_of_current_week + timedelta(days=1)).strftime('%Y-%m-%d')
+    wednesday = (monday_of_current_week + timedelta(days=2)).strftime('%Y-%m-%d')
+    thursday = (monday_of_current_week + timedelta(days=3)).strftime('%Y-%m-%d')
+    friday = (monday_of_current_week + timedelta(days=4)).strftime('%Y-%m-%d')
+    saturday = (monday_of_current_week + timedelta(days=5)).strftime('%Y-%m-%d')
+    sunday = (monday_of_current_week + timedelta(days=6)).strftime('%Y-%m-%d')
+
+    monday_date = timezone.make_aware(timezone.datetime.strptime(monday, '%Y-%m-%d')).date()
+    tuesday_date = timezone.make_aware(timezone.datetime.strptime(tuesday, '%Y-%m-%d')).date()
+    wednesday_date = timezone.make_aware(timezone.datetime.strptime(wednesday, '%Y-%m-%d')).date()
+    thursday_date = timezone.make_aware(timezone.datetime.strptime(thursday, '%Y-%m-%d')).date()
+    friday_date = timezone.make_aware(timezone.datetime.strptime(tuesday, '%Y-%m-%d')).date()
+    saturday_date = timezone.make_aware(timezone.datetime.strptime(saturday, '%Y-%m-%d')).date()
+    sunday_date = timezone.make_aware(timezone.datetime.strptime(sunday, '%Y-%m-%d')).date()
+
+    print(f'Monday Date: {monday_date}')
+    monday_posts = Post.objects.filter(deadline__date=monday_date)
+    print(f'Monday Posts: {monday_posts}')
+
+    print(f'Tuesday Date: {tuesday_date}')
+    tuesday_posts= Post.objects.filter(deadline__date=tuesday_date)
+    print(f'Tuesday Posts: {tuesday_posts}')
+
+    print(f'Wednesday Date: {wednesday_date}')
+    wednesday_posts = Post.objects.filter(deadline__date=wednesday_date)
+    print(f'Wednesday Posts: {wednesday_posts}')
+
+    print(f'Thursday Date: {thursday_date}')
+    thursday_posts = Post.objects.filter(deadline__date=thursday_date)
+    print(f'Thursday Posts: {thursday_posts}')
+
+    print(f'Friday Date: {friday_date}')
+    friday_posts = Post.objects.filter(deadline__date=friday_date)
+    print(f'Friday Posts: {friday_posts}')
+
+    print(f'Saturday Date: {saturday_date}')
+    saturday_posts = Post.objects.filter(deadline__date=saturday_date)
+    print(f'Saturday Posts: {saturday_posts}')
+
+    print(f'Sunday Date: {sunday_date}')
+    sunday_posts = Post.objects.filter(deadline__date=sunday_date)
+    print(f'Sunday Posts: {sunday_posts}')
 
     # Django의 context에 결과를 저장
     context = {
@@ -286,24 +319,20 @@ def my(request):
         'friday': friday,
         'saturday': saturday,
         'sunday': sunday,
+
+        'monday_posts': monday_posts,
+        'tuesday_posts': tuesday_posts,
+        'wednesday_posts': wednesday_posts,
+        'thursday_posts': thursday_posts,
+        'friday_posts': friday_posts,
+        'saturday_posts': saturday_posts,
+        'sunday_posts': sunday_posts,
     }
 
     return render(
         request,
         'home/my.html',
-        context
+        context,
     )
 
 
-def get_weekday_number(day):
-    # 요일 문자열을 받아 해당하는 숫자를 반환하는 함수
-    weekdays = ['월', '화', '수', '목', '금', '토', '일']
-    return weekdays.index(day) + 1
-
-
-def my_view(request, day):
-    # 요청된 요일에 해당하는 완료된 과제들을 가져옴
-    weekday_number = get_weekday_number(day)
-    weekday_posts = Post.objects.filter(complete=True, deadline__week_day=weekday_number)
-
-    return render(request, 'home/my.html', {'weekday_posts': weekday_posts, 'selected_day': day})
