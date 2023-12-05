@@ -148,7 +148,7 @@
             <hr>
             {% if monday_posts.exists %}
             {% for post in monday_posts %}
-            <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            <p><a href="{{ post.get_absolute_url }}" style="color: #2D3142; margin: 20px;">{{ post.title }}</a></p>
             {% endfor %}
             {% endif %}
         </div>

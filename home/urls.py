@@ -24,6 +24,9 @@ urlpatterns = [
     # 컴플리트(상세확인)
     path('todo_check2/<int:pk>/', views.todo_check2, name='todo_check2'),
 
+    # 마이
+    path('my/', views.my),
+
     # 팝업창
     path('popup/', views.popup),
 

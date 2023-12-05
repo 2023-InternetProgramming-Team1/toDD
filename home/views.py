@@ -54,17 +54,6 @@ def category_page(request, slug):
     )
 
 
-def createEclassPost(title, content, deadline, activity):
-    category = get_object_or_404(Category, slug='e_class')
-    return Post.objects.create(
-        title=str('[' + activity.lecture.name + '] ') + title,
-        content=content,
-        deadline=deadline,
-        complete=False,
-        category=category,
-    )
-
-
 def todo_check(request, pk):
     todo = get_object_or_404(Post, pk=pk)
     todo.complete = not todo.complete
@@ -117,18 +106,28 @@ class PostList(ListView):
             e_class = Category(name='e-class')
             e_class.save()
 
-        assignments = Assignment.objects.all()
-        quizzes = Quiz.objects.all()
+        assignment = Assignment.objects.all()
+        quiz = Quiz.objects.all()
 
-        for assignment in assignments:
-            if not Post.objects.filter(title=str('[' + assignment.activity.lecture.name + '] ') + assignment.title,
-                                       content=assignment.content,
-                                       deadline=assignment.due_date).exists():
-                createEclassPost(assignment.title, assignment.content, assignment.due_date, assignment.activity)
-        for quiz in quizzes:
-            if not Post.objects.filter(title=str('[' + quiz.activity.lecture.name + '] ') + quiz.title,
-                                       content=quiz.questions, deadline=quiz.due_date).exists():
-                createEclassPost(quiz.title, quiz.questions, quiz.due_date, quiz.activity)
+        category = get_object_or_404(Category, slug='e_class')
+
+        for other in assignment:
+            Post.objects.get_or_create(
+                title=other.title,
+                content=other.content,
+                deadline=other.due_date,
+                complete=False,
+                category=category
+            )
+
+        for other in quiz:
+            Post.objects.get_or_create(
+                title=other.title,
+                content=other.questions,
+                deadline=other.due_date,
+                complete=False,
+                category=category
+            )
 
         # 현재 날짜
         current_date = timezone.now().date()
