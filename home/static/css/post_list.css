@@ -51,18 +51,12 @@
 }
 
 #before {
-    border: none;
-    background: none;z
-    cursor: pointer;
     width: 40px;
     margin: 12px 0px 0px 0px;
     padding: 0;
 }
 
 #after {
-    border: none;
-    background: none;
-    cursor: pointer;
     width: 40px;
     margin: 12px 0px 0px 0px;
     padding: 0;
