@@ -1,5 +1,5 @@
+from django.contrib.auth.models import User
 from django.db import models
-from join.models import User
 
 import os
 from django.utils import timezone
@@ -35,6 +35,9 @@ class Post(models.Model):
     complete = models.BooleanField(default=False)
     # 리스트 만든 날짜
     created_at = models.DateTimeField(default=timezone.now, blank=True)
+
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+
 
     def __str__(self):
         return f'[{self.pk}] {self.title}'
