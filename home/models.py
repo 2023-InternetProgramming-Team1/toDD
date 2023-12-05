@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 import os
@@ -26,6 +27,8 @@ class Post(models.Model):
     complete = models.BooleanField(default=False)
     # 리스트 만든 날짜
     # created_at = models.DateTimeField(auto_now_add=True)
+
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     # 이클래스 모델 불러오기
     # lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
