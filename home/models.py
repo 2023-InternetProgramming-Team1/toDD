@@ -4,10 +4,16 @@ from join.models import User
 import os
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
+from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify('e_class')
+            super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -36,10 +42,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         return f'../../../home/check_details_{self.pk}/'
 
-# class My(models.Model):
-#     users = models.ManyToManyField(Category, related_name='my')
-#     my_path = models.CharField(max_length=100, default='home/my.html')
-#
-#     def __str__(self):
-#         return f'My {self.pk}'
+    def is_deadline_today(self):
+        today = timezone.now()
+        deadline = self.deadline
+
+        difference = deadline - today
+
+        return 0 <= difference.total_seconds() <= 86400 and not self.complete
 

@@ -48,10 +48,12 @@ class CheckThis(models.Model):
         return f'../../home/check_details_{self.post.pk}/'
 
     def is_deadline_today(self):
-        today = timezone.localtime()
-        deadline = timezone.localtime(self.post.deadline)
+        today = timezone.now()
+        deadline = self.post.deadline
+
         difference = deadline - today
-        return difference.total_seconds() <= 86400 and difference.total_seconds() >= 0 and self.post.complete == False
+
+        return 0 <= difference.total_seconds() <= 86400 and not self.post.complete
 
 
 

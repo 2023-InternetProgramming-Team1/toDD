@@ -1,25 +1,14 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.views.generic import ListView, DetailView, View
-
-from . import models
+from django.views.generic import ListView, DetailView
 from .forms import PostForm
 from .models import Post, Category
 from eclass.models import Assignment, Quiz
-
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 from django.utils.dateformat import DateFormat
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-
-
-
-def todo_check(request, pk):
-    todo = get_object_or_404(Post, pk=pk)
-    todo.complete = not todo.complete
-    todo.save()
-
-    referer = request.META.get('HTTP_REFERER', '/')
-    return HttpResponseRedirect(referer)
+from django.urls import reverse
+from collections import deque
 
 
 def todo_check_category(request, pk, slug):
@@ -66,73 +55,146 @@ def category_page(request, slug):
 
 
 def createEclassPost(title, content, deadline, activity):
+    category = get_object_or_404(Category, slug='e_class')
     return Post.objects.create(
-        title=str('['+activity.lecture.name+'] ')+title,
+        title=str('[' + activity.lecture.name + '] ') + title,
         content=content,
         deadline=deadline,
         complete=False,
-        category=None,
+        category=category,
+    )
+
+
+def todo_check(request, pk):
+    todo = get_object_or_404(Post, pk=pk)
+    todo.complete = not todo.complete
+    todo.save()
+
+    # 현재 complete한 todo의 날짜로 stored_date를 초기화
+    stored_date = todo.deadline.date().strftime('%Y-%m-%d')
+    request.session['stored_date'] = stored_date
+    print("Updated stored_date:", request.session['stored_date'])
+    stored_date_str = request.session['stored_date']
+
+    # Convert stored_date to datetime.date
+    stored_date = datetime.strptime(stored_date, '%Y-%m-%d').date()
+
+    # 요일 설정
+    dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
+
+    # 날짜 출력
+    today_formatted = DateFormat(stored_date).format('Y.m.d')
+    today = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
+
+    post_list_today = Post.objects.filter(deadline__date=stored_date)
+
+    categories = Category.objects.all()
+    no_categories_post_count = Post.objects.filter(category=None).count()
+
+    return render(
+        request,
+        'home/post_list.html',
+        {
+            'post_list_today': post_list_today,
+            'stored_date_str': stored_date_str,
+            'today': today,
+            'stored_date': stored_date.strftime('%Y-%m-%d'),
+            'categories': categories,
+            'no_categories_post_count': no_categories_post_count,
+        }
     )
 
 
 class PostList(ListView):
     model = Post
     ordering = '-pk'
-
-    assignments = Assignment.objects.all()
-    quizzes = Quiz.objects.all()
-
-    for assignment in assignments:
-        if not Post.objects.filter(title=str('['+assignment.activity.lecture.name+'] ')+assignment.title, content=assignment.content,
-                                   deadline=assignment.due_date).exists():
-            createEclassPost(assignment.title, assignment.content, assignment.due_date,assignment.activity)
-    for quiz in quizzes:
-        if not Post.objects.filter(title=str('['+quiz.activity.lecture.name+'] ')+quiz.title, content=quiz.questions, deadline=quiz.due_date).exists():
-            createEclassPost(quiz.title, quiz.questions, quiz.due_date, quiz.activity)
-
+    
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
 
-        # 이전 날짜
-        stored_date_str = self.request.session.get('stored_date')
+        # e-class 카테고리 자동 추가
+        if not Category.objects.filter(slug='e_class').exists():
+            e_class = Category(name='e-class')
+            e_class.save()
+
+        assignments = Assignment.objects.all()
+        quizzes = Quiz.objects.all()
+
+        for assignment in assignments:
+            if not Post.objects.filter(title=str('[' + assignment.activity.lecture.name + '] ') + assignment.title,
+                                       content=assignment.content,
+                                       deadline=assignment.due_date).exists():
+                createEclassPost(assignment.title, assignment.content, assignment.due_date, assignment.activity)
+        for quiz in quizzes:
+            if not Post.objects.filter(title=str('[' + quiz.activity.lecture.name + '] ') + quiz.title,
+                                       content=quiz.questions, deadline=quiz.due_date).exists():
+                createEclassPost(quiz.title, quiz.questions, quiz.due_date, quiz.activity)
+
         # 현재 날짜
         current_date = timezone.now().date()
-
-        print(f'stored_date_str: {stored_date_str}')
-
-        if 'prev' not in self.request.GET and 'next' not in self.request.GET:
-            stored_date = current_date
-            self.request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
-            stored_date_str = self.request.session.get('stored_date')
-        else:
-            stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date()
-
-        print(f'stored_date: {stored_date}')
-
-        # 날짜 바꾸기
-        if 'prev' in self.request.GET:
-            stored_date -= timedelta(days=1)
-        elif 'next' in self.request.GET:
-            stored_date += timedelta(days=1)
-
-        # 날짜 -> 투두 리스트
-        context['post_list_today'] = Post.objects.filter(deadline__date=stored_date)
 
         # 요일 설정
         dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
 
         # 날짜 출력
-        today_formatted = DateFormat(stored_date).format('Y.m.d')
-        context['today'] = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
+        today_formatted = DateFormat(current_date).format('Y.m.d')
+        context['today'] = today_formatted + ' (' + dateDict[current_date.weekday()] + ')'
 
-        # 카테고리
+        self.request.session['stored_date'] = current_date.strftime('%Y-%m-%d')
+
+        context['post_list_today'] = Post.objects.filter(deadline__date=current_date)
+
         context['categories'] = Category.objects.all()
         context['no_categories_post_count'] = Post.objects.filter(category=None).count()
 
-        # 변경 날짜 저장
-        self.request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
-
         return context
+
+
+def change_date(request, **kwargs):
+    # 이전 날짜
+    stored_date_str = request.session.get('stored_date', '')
+    # 현재 날짜
+    current_date = timezone.now().date()
+
+    if 'prev' in request.GET:
+        stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date() - timedelta(days=1)
+        request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
+        stored_date_str = request.session['stored_date']
+    elif 'next' in request.GET:
+        stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date() + timedelta(days=1)
+        request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
+        stored_date_str = request.session['stored_date']
+    elif stored_date_str is None or stored_date_str == '' or ('prev' not in request.GET and 'next' not in request.GET):
+        stored_date = current_date
+        request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
+        stored_date_str = request.session['stored_date']
+    else:
+        stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date()
+
+    # 요일 설정
+    dateDict = {0: '월', 1: '화', 2: '수', 3: '목', 4: '금', 5: '토', 6: '일'}
+
+    # 날짜 출력
+    today_formatted = DateFormat(stored_date).format('Y.m.d')
+    today = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
+
+    post_list_today = Post.objects.filter(deadline__date=stored_date)
+
+    categories = Category.objects.all()
+    no_categories_post_count = Post.objects.filter(category=None).count()
+
+    return render(
+        request,
+        'home/post_list.html',
+        {
+            'post_list_today': post_list_today,
+            'stored_date_str': stored_date_str,
+            'today': today,
+            'stored_date': stored_date.strftime('%Y-%m-%d'),
+            'categories': categories,
+            'no_categories_post_count': no_categories_post_count,
+        }
+    )
 
 
 class CategoryList(ListView):
@@ -190,6 +252,11 @@ def postDelete(request, pk):
     post = Post.objects.get(id=pk)
     post.delete()
     return redirect('../../home/')
+
+
+def popup(request):
+    post_content = Post.objects.all()
+    return render(request, 'home/popup.html', {'post_content': post_content})
 
 
 def my(request):
@@ -268,14 +335,4 @@ def my(request):
         context,
     )
 
-#
-# def get_weekday_number(day):
-#     weekdays = ['월', '화', '수', '목', '금', '토', '일']
-#     return weekdays.index(day) + 1
-#
-# def my_view(request, day):
-#     weekday_number = get_weekday_number(day)
-#     weekday_posts = Post.objects.filter(complete=True, deadline__week_day=weekday_number)
-#
-#     return render(request, 'home/my.html', {'weekday_posts': weekday_posts, 'selected_day': day})
-#
+
