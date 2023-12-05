@@ -2,10 +2,16 @@ from django.db import models
 from django.utils import timezone
 import os
 from django.utils import timezone
+from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify('e_class')
+            super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

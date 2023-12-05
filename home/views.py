@@ -89,6 +89,11 @@ class PostList(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
 
+        # e-class 카테고리 자동 추가
+        if not Category.objects.filter(slug='e_class').exists():
+            e_class = Category(name='e-class')
+            e_class.save()
+
         # 이전 날짜
         stored_date_str = self.request.session.get('stored_date')
         # 현재 날짜
