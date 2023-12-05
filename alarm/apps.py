@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class SinglePagesConfig(AppConfig):
+class AlarmConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'alarm'
