@@ -45,3 +45,9 @@ class Post(models.Model):
         deadline = timezone.localtime(self.deadline)
         difference = deadline - today
         return difference.total_seconds() <= 86400 and difference.total_seconds() >= 0 and self.complete == False
+
+
+
+# class mypage(models.Model):
+#     users = models.ManyToManyField(User, related_name='mypage_set')
+#     mypage='join/mypage.html'

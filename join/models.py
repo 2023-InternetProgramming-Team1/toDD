@@ -21,8 +21,5 @@ class account(models.Model):
     users = models.ManyToManyField(User, related_name='account')
     account='join/account.html'
 
-class mypage(models.Model):
-    users = models.ManyToManyField(User, related_name='mypage')
-    mypage='join/mypage.html'
 
 

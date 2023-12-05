@@ -35,15 +35,16 @@
     </div>
     <div class="col-8 mt-3 mb-5">
         <div class="listBox" style="position: relative;">
-            <form class="controll" method="get" action="{% url 'home:change_date_next' %}">
+            <form class="controll" method="get" action="{% url 'home:change_date' %}">
                 {% csrf_token %}
-                <button id="before" name="prev" type="submit">
+                <button id="before" name="prev" type="submit" style="border: none; background: none;">
                     <img src="{% static 'img/home_before.png' %}" style="width: 40px"/>
                 </button>
                 <div id="date" style="font-weight: 700;">{{ today }}</div>
-                <button id="after" name="next" type="submit">
+                <button id="after" name="next" type="submit" style="border: none; background: none;">
                     <img src="{% static 'img/home_after.png' %}" style="width: 40px"/>
                 </button>
+                <input type="hidden" name="date" value="{{ stored_date }}">
             </form>
             <div class="todoBox">
                  {% if post_list_today.exists %}
@@ -94,18 +95,12 @@
 </div>
 
 
-
-
-
-
-
     <!-- 팝업창 띄우기-->
     <script language="javascript">
 
              window.open("/home/popup","팝업 이름","width=300,height=300, left=300, top=300");
 
     </script>
-
 
 
 {% endblock %}
