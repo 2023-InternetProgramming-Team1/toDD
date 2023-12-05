@@ -17,7 +17,6 @@
             {{ item.title | truncatechars:6 }}
             <a style="text-align: right; color: red;">{{ item.deadline|timeuntil }} 남음</a>
             <br>
-        {% else %}
         {% endif %}
     {% endfor %}
 

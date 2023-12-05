@@ -47,10 +47,12 @@ class Post(models.Model):
 
 
     def is_deadline_today(self):
-        today = timezone.localtime()
-        deadline = timezone.localtime(self.deadline)
+        today = timezone.now()
+        deadline = self.deadline
+
         difference = deadline - today
-        return difference.total_seconds() <= 86400 and difference.total_seconds() >= 0 and self.complete == False
+
+        return 0 <= difference.total_seconds() <= 86400 and not self.complete
 
 
 
