@@ -43,7 +43,6 @@ def category_page(request, slug):
             title=str('[' + other.activity.lecture.name + ']') + other.title,
             content=other.content,
             deadline=other.due_date,
-            complete=False,
             category=category,
             author=request.user,
         )
@@ -53,7 +52,6 @@ def category_page(request, slug):
             title=str('[' + other.activity.lecture.name + ']') + other.title,
             content=other.questions,
             deadline=other.due_date,
-            complete=False,
             category=category,
             author=request.user,
         )
@@ -149,7 +147,6 @@ class PostList(ListView):
                 title=str('[' + other.activity.lecture.name + ']') + other.title,
                 content=other.content,
                 deadline=other.due_date,
-                complete=False,
                 category=category,
                 author=self.request.user,
             )
@@ -159,7 +156,6 @@ class PostList(ListView):
                 title=str('[' + other.activity.lecture.name + ']') + other.title,
                 content=other.questions,
                 deadline=other.due_date,
-                complete=False,
                 category=category,
                 author=self.request.user,
             )

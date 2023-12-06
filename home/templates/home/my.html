@@ -146,6 +146,7 @@
             {% if monday_posts.exists %}
             {% for post in monday_posts %}
             <p><a href="{{ post.get_absolute_url }}" style="color: #2D3142; margin: 20px;">{{ post.title }}</a></p>
+            <br>
             {% endfor %}
             {% endif %}
         </div>
@@ -158,6 +159,7 @@
             {% if tuesday_posts.exists %}
             {% for post in monday_posts %}
             <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            <br>
             {% endfor %}
             {% endif %}
         </div>
@@ -171,6 +173,7 @@
             {% if wednesday_posts.exists %}
             {% for post in wednesday_posts %}
             <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            <br>
             {% endfor %}
             {% endif %}
         </div>
@@ -183,6 +186,7 @@
             {% if thursday_posts.exists %}
             {% for post in thursday_posts %}
             <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            <br>
             {% endfor %}
             {% endif %}
         </div>
@@ -195,6 +199,7 @@
             {% if friday_posts.exists %}
             {% for post in friday_posts %}
             <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            <br>
             {% endfor %}
             {% endif %}
         </div>
@@ -207,6 +212,7 @@
             {% if saturday_posts.exists %}
             {% for post in saturday_posts %}
             <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            <br>
             {% endfor %}
             {% endif %}
         </div>
@@ -219,6 +225,7 @@
             {% if sunday_posts.exists %}
             {% for post in sunday_posts %}
             <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
+            <br>
             {% endfor %}
             {% endif %}
         </div>
