@@ -1,79 +1,85 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-    <head>
-        <title>HOME</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
+<head>
+    <title>HOME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
             href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
             rel="stylesheet"
-        />
-        <link
+    />
+    <link
             href="{% static 'single_pages/bootstrap/bootstrap.min.css' %}"
             rel="stylesheet"
             media="screen"
-        />
-        <script
+    />
+    <script
             src="https://kit.fontawesome.com/726bbd6862.js"
             crossorigin="anonymous"
-        ></script>
-        <style>
-            #slogun {
-                width: 60%;
-                margin-top: 7%;
-                margin-bottom: 1%;
-            }
+    ></script>
+    <style>
+        #slogun {
+            width: 60%;
+            margin-top: 7%;
+            margin-bottom: 1%;
+        }
 
-            #logo {
-                margin-bottom: 3%;
-                width: 35%
-            }
+        #logo {
+            margin-bottom: 3%;
+            width: 35%
+        }
 
-            #btn {
-                border-radius: 50px;
-                background: #FFEC9D;
-                color: #2d3142;
-                width: 15%;
-                height: 70px;
-                font-weight: 900;
-                font-size: 40px;
-                text-decoration: none;
-                text-align: center;
-                padding-top: 5px
-            }
-            #btn:hover {
-                background: #E3D288;
-            }
-        </style>
-    </head>
-    <body
+        #btn {
+            border-radius: 50px;
+            background: #FFEC9D;
+            color: #2d3142;
+            width: 15%;
+            height: 70px;
+            font-weight: 900;
+            font-size: 40px;
+            text-decoration: none;
+            text-align: center;
+            padding-top: 5px
+        }
+        #btn:hover {
+            background: #E3D288;
+        }
+    </style>
+</head>
+<body
         class="d-flex flex-column min-vh-100 align-items-center"
         style="
             background-color: #2d3142;
             font-family: 'Inter', sans-serif;
             margin: 0">
 
-        <img id="slogun" src="{% static 'img/start_slogun.png' %}">
-        <img id="logo" src="{% static 'img/start_logo.png' %}">
-        <a href="/accounts/login/" id="btn">START</a>
-        <a href="/accounts/signup/" id="btn2">회원가입</a>
+<img id="slogun" src="{% static 'img/start_slogun.png' %}">
+<img id="logo" src="{% static 'img/start_logo.png' %}">
+<a href="/accounts/login/" id="btn">START</a>
+<br>
+<br>
+<p class="have" style="
+            color: white;
+            font-size:20px;">계정이 없으신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+        href="/accounts/signup/" id="btn2"><span class="make" style="
+            color: #5dbbf8;
+            font-size:20px;">계정 만들기</span></a>
 
-
-        <script
+    <script
             src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"
-        ></script>
-        <script
+    ></script>
+    <script
             src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"
-        ></script>
-        <script
+    ></script>
+    <script
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"
-        ></script>
-    </body>
+    ></script>
+</body>
 </html>

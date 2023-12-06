@@ -22,9 +22,9 @@
                 <p style="margin: 0px 0px 20px 0px">CATEGORY</p>
             </div>
             <ul id="category" style="margin-bottom:20px">
-                {% for category in categories %}
+                {% for category, count in categories_post_counts.items %}
                 <li>
-                    <a href="{{ category.get_absolute_url }}" style="text-decoration: none; color: #2d3142">{{ category }} ({{ category.post_set.count }})</a>
+                    <a href="/home/category/{{ category.slug }}/" style="text-decoration: none; color: #2d3142">{{ category.name }} ({{ count }})</a>
                 </li>
                 {% endfor %}
                 <li>
@@ -101,6 +101,4 @@
              window.open("/home/popup","팝업 이름","width=300,height=300, left=300, top=300");
 
     </script>
-
-
 {% endblock %}
