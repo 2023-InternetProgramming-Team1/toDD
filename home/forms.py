@@ -26,14 +26,10 @@ class PostForm(forms.ModelForm):
                     'class': 'form-control border-0',
                     'style': 'background-color: #FFEC9D;',
                 }),
-
+            'category': forms.Select(
+                attrs={
+                    'class': 'form-control border-0',
+                    'style': 'background-color: #FFEC9D;',
+                }),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['category'].widget.attrs.update({
-            'class': 'form-control border-0',
-            'style': 'background-color: #FFEC9D;',
-        })
 
