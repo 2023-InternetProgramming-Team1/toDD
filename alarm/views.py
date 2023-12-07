@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 
 
 def alarm(request):
-    check_this_content = CheckThis.objects.all()
+    check_this_content = CheckThis.objects.filter(post__author=request.user)
     updated_content = Updated.objects.all()
     return render(
         request,
@@ -15,7 +15,7 @@ def alarm(request):
 
 def remove_check_this(request, pk):
     post = CheckThis.objects.get(pk=pk)
-    check_this_content = CheckThis.objects.all()
+    check_this_content = CheckThis.objects.filter(post__author=request.user)
     updated_content = Updated.objects.all()
     if request.method == 'POST':
         post.delete()
@@ -29,7 +29,7 @@ def remove_check_this(request, pk):
 
 def remove_assignment(request, pk):
     assignment = Updated.objects.get(pk=pk)
-    check_this_content = CheckThis.objects.all()
+    check_this_content = CheckThis.objects.filter(post__author=request.user)
     updated_content = Updated.objects.all()
     if request.method == 'POST':
         assignment.delete()
@@ -43,7 +43,7 @@ def remove_assignment(request, pk):
 
 def remove_quiz(request, pk):
     quiz = Updated.objects.get(pk=pk)
-    check_this_content = CheckThis.objects.all()
+    check_this_content = CheckThis.objects.filter(post__author=request.user)
     updated_content = Updated.objects.all()
     if request.method == 'POST':
         quiz.delete()

@@ -10,11 +10,6 @@ class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify('e_class')
-            super(Category, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.name
 
@@ -35,12 +30,12 @@ class Post(models.Model):
     complete = models.BooleanField(default=False)
     # 리스트 만든 날짜
     created_at = models.DateTimeField(default=timezone.now, blank=True)
-
+    # 유저
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
 
     def __str__(self):
-        return f'[{self.pk}] {self.title}'
+        return f'[{self.pk}] {self.title} :: {self.author}'
 
     def get_absolute_url(self):
         return f'../../../home/check_details_{self.pk}/'

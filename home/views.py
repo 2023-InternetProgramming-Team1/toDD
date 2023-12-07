@@ -34,22 +34,50 @@ def todo_check2(request, pk):
 
 
 def category_page(request, slug):
+    assignment = Assignment.objects.all()
+    quiz = Quiz.objects.all()
+    category = get_object_or_404(Category, slug='e_class')
+
+    for other in assignment:
+        Post.objects.get_or_create(
+            title=str('[' + other.activity.lecture.name + ']') + other.title,
+            content=other.content,
+            deadline=other.due_date,
+            category=category,
+            author=request.user,
+        )
+
+    for other in quiz:
+        Post.objects.get_or_create(
+            title=str('[' + other.activity.lecture.name + ']') + other.title,
+            content=other.questions,
+            deadline=other.due_date,
+            category=category,
+            author=request.user,
+        )
+
     if slug == 'no_category':
-        category = 'e-class'
-        post_list = Post.objects.filter(category=None)
+        category = '미분류'
+        post_list = Post.objects.filter(category=None, author=request.user)
     else:
         category = get_object_or_404(Category, slug=slug)
-        post_list = Post.objects.filter(category=category)
+        post_list = Post.objects.filter(category=category, author=request.user)
+
+    all_categories = Category.objects.all()
+    categories_post_counts = {}
+    for category_d in all_categories:
+        count = Post.objects.filter(category=category_d, author=request.user).count()
+        categories_post_counts[category_d] = count
 
     return render(
         request,
         'home/category_list.html',
         {
             'post_list': post_list,
-            'categories': Category.objects.all(),
-            'no_categories_post_count': Post.objects.filter(category=None).count(),
+            'no_categories_post_count': Post.objects.filter(category=None, author=request.user).count(),
             'category': category,
             'no_category_slug': 'no_category',
+            'categories_post_counts': categories_post_counts,
         }
     )
 
@@ -65,7 +93,6 @@ def todo_check(request, pk):
     print("Updated stored_date:", request.session['stored_date'])
     stored_date_str = request.session['stored_date']
 
-    # Convert stored_date to datetime.date
     stored_date = datetime.strptime(stored_date, '%Y-%m-%d').date()
 
     # 요일 설정
@@ -75,10 +102,16 @@ def todo_check(request, pk):
     today_formatted = DateFormat(stored_date).format('Y.m.d')
     today = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
 
-    post_list_today = Post.objects.filter(deadline__date=stored_date)
+    post_list_today = Post.objects.filter(deadline__date=stored_date, author=request.user)
 
-    categories = Category.objects.all()
-    no_categories_post_count = Post.objects.filter(category=None).count()
+    all_categories = Category.objects.all()
+
+    categories_post_counts = {}
+    for category in all_categories:
+        count = Post.objects.filter(category=category, author=request.user).count()
+        categories_post_counts[category] = count
+
+    no_categories_post_count = Post.objects.filter(category=None, author=request.user).count()
 
     return render(
         request,
@@ -88,8 +121,8 @@ def todo_check(request, pk):
             'stored_date_str': stored_date_str,
             'today': today,
             'stored_date': stored_date.strftime('%Y-%m-%d'),
-            'categories': categories,
             'no_categories_post_count': no_categories_post_count,
+            'categories_post_counts': categories_post_counts,
         }
     )
 
@@ -97,14 +130,12 @@ def todo_check(request, pk):
 class PostList(ListView):
     model = Post
     ordering = '-pk'
-    
+
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
 
         # e-class 카테고리 자동 추가
-        if not Category.objects.filter(slug='e_class').exists():
-            e_class = Category(name='e-class')
-            e_class.save()
+        Category.objects.get_or_create(name='e-class', slug='e_class')
 
         assignment = Assignment.objects.all()
         quiz = Quiz.objects.all()
@@ -113,20 +144,20 @@ class PostList(ListView):
 
         for other in assignment:
             Post.objects.get_or_create(
-                title=other.title,
+                title=str('[' + other.activity.lecture.name + ']') + other.title,
                 content=other.content,
                 deadline=other.due_date,
-                complete=False,
-                category=category
+                category=category,
+                author=self.request.user,
             )
 
         for other in quiz:
             Post.objects.get_or_create(
-                title=other.title,
+                title=str('[' + other.activity.lecture.name + ']') + other.title,
                 content=other.questions,
                 deadline=other.due_date,
-                complete=False,
-                category=category
+                category=category,
+                author=self.request.user,
             )
 
         # 현재 날짜
@@ -141,10 +172,17 @@ class PostList(ListView):
 
         self.request.session['stored_date'] = current_date.strftime('%Y-%m-%d')
 
-        context['post_list_today'] = Post.objects.filter(deadline__date=current_date)
+        context['post_list_today'] = Post.objects.filter(deadline__date=current_date, author=self.request.user)
 
-        context['categories'] = Category.objects.all()
-        context['no_categories_post_count'] = Post.objects.filter(category=None).count()
+        all_categories = Category.objects.all()
+
+        categories_post_counts = {}
+        for category in all_categories:
+            count = Post.objects.filter(category=category, author=self.request.user).count()
+            categories_post_counts[category] = count
+
+        context['categories_post_counts'] = categories_post_counts
+        context['no_categories_post_count'] = Post.objects.filter(category=None, author=self.request.user).count()
 
         return context
 
@@ -177,10 +215,17 @@ def change_date(request, **kwargs):
     today_formatted = DateFormat(stored_date).format('Y.m.d')
     today = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
 
-    post_list_today = Post.objects.filter(deadline__date=stored_date)
+    post_list_today = Post.objects.filter(deadline__date=stored_date, author=request.user)
 
-    categories = Category.objects.all()
-    no_categories_post_count = Post.objects.filter(category=None).count()
+    # 카테고리
+    all_categories = Category.objects.all()
+
+    categories_post_counts = {}
+    for category in all_categories:
+        count = Post.objects.filter(category=category, author=request.user).count()
+        categories_post_counts[category] = count
+
+    no_categories_post_count = Post.objects.filter(category=None, author=request.user).count()
 
     return render(
         request,
@@ -190,8 +235,8 @@ def change_date(request, **kwargs):
             'stored_date_str': stored_date_str,
             'today': today,
             'stored_date': stored_date.strftime('%Y-%m-%d'),
-            'categories': categories,
             'no_categories_post_count': no_categories_post_count,
+            'categories_post_counts': categories_post_counts,
         }
     )
 
@@ -200,7 +245,8 @@ class CategoryList(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
         context['categories'] = Category.objects.all()
-        context['no_categories_post_count'] = Post.objects.filter(category=None).count()
+        context['no_categories_post_count'] = Post.objects.filter(category=None, author=self.request.user).count()
+        context['categories_post_count'] = Post.objects.filter(category=self.category, author=self.request.user).count()
         return context
 
 
@@ -217,6 +263,7 @@ def postCreate(request):
             post.content = form.cleaned_data['content']
             post.deadline = form.cleaned_data['deadline']
             post.category = form.cleaned_data['category']
+            post.author = request.user
             post.save()
             return redirect(post)
     else:  # 입력 양식을 보여줄 때
@@ -254,7 +301,7 @@ def postDelete(request, pk):
 
 
 def popup(request):
-    post_content = Post.objects.all()
+    post_content = Post.objects.filter(author=request.user)
     return render(request, 'home/popup.html', {'post_content': post_content})
 
 
@@ -282,31 +329,31 @@ def my(request):
     sunday_date = timezone.make_aware(timezone.datetime.strptime(sunday, '%Y-%m-%d')).date()
 
     print(f'Monday Date: {monday_date}')
-    monday_posts = Post.objects.filter(deadline__date=monday_date)
+    monday_posts = Post.objects.filter(deadline__date=monday_date, author=request.user)
     print(f'Monday Posts: {monday_posts}')
 
     print(f'Tuesday Date: {tuesday_date}')
-    tuesday_posts= Post.objects.filter(deadline__date=tuesday_date)
+    tuesday_posts = Post.objects.filter(deadline__date=tuesday_date, author=request.user)
     print(f'Tuesday Posts: {tuesday_posts}')
 
     print(f'Wednesday Date: {wednesday_date}')
-    wednesday_posts = Post.objects.filter(deadline__date=wednesday_date)
+    wednesday_posts = Post.objects.filter(deadline__date=wednesday_date, author=request.user)
     print(f'Wednesday Posts: {wednesday_posts}')
 
     print(f'Thursday Date: {thursday_date}')
-    thursday_posts = Post.objects.filter(deadline__date=thursday_date)
+    thursday_posts = Post.objects.filter(deadline__date=thursday_date, author=request.user)
     print(f'Thursday Posts: {thursday_posts}')
 
     print(f'Friday Date: {friday_date}')
-    friday_posts = Post.objects.filter(deadline__date=friday_date)
+    friday_posts = Post.objects.filter(deadline__date=friday_date, author=request.user)
     print(f'Friday Posts: {friday_posts}')
 
     print(f'Saturday Date: {saturday_date}')
-    saturday_posts = Post.objects.filter(deadline__date=saturday_date)
+    saturday_posts = Post.objects.filter(deadline__date=saturday_date, author=request.user)
     print(f'Saturday Posts: {saturday_posts}')
 
     print(f'Sunday Date: {sunday_date}')
-    sunday_posts = Post.objects.filter(deadline__date=sunday_date)
+    sunday_posts = Post.objects.filter(deadline__date=sunday_date, author=request.user)
     print(f'Sunday Posts: {sunday_posts}')
 
     # Django의 context에 결과를 저장
@@ -333,5 +380,3 @@ def my(request):
         'home/my.html',
         context,
     )
-
-
