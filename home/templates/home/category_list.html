@@ -1,7 +1,6 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block main_area %}
-
 <div class="row mx-5">
     <div class="col-4 mt-3 mb-5">
         <div id="title" style="font-size: 50px">
@@ -23,57 +22,48 @@
                 <p style="margin: 0px 0px 20px 0px">CATEGORY</p>
             </div>
             <ul id="category" style="margin-bottom:20px">
-                {% for category in categories %}
+                {% for category_c, count in categories_post_counts.items %}
                 <li>
-                    <a
-                            href="{{ category.get_absolute_url }}"
-                            style="text-decoration: none; color: #2d3142"
-                    >{{ category }} ({{ category.post_set.count }})</a>
+                    <a href="/home/category/{{ category_c.slug }}/" style="text-decoration: none; color: #2d3142">{{ category_c.name }} ({{ count }})</a>
                 </li>
                 {% endfor %}
                 <li>
-                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">미분류 ({{ no_categories_post_count }})</a
->
+                    <a href="/home/category/no_category/" style="text-decoration: none; color: #2d3142">미분류 ({{ no_categories_post_count }})</a>
                 </li>
             </ul>
         </div>
     </div>
     <div class="col-8 mt-3 mb-5">
-        <div class="listBox">
-            <!--카테고리 수정-->
+        <div class="listBox" style="position: relative;">
             <div class="controll">
-
                 <div id="date" style="font-weight: 700;">{{ category }}</div>
-
             </div>
             <div class="todoBox">
-                {% if post_list.exists %}
-
+                 {% if post_list.exists %}
                     {% for p in post_list %}
-                        <form class="todo" style="margin-bottom:10px"method="post" action="{% if category == '미분류' %}{% url 'home:todo_check_no_category' pk=p.pk %}{% else %}{% url 'home:todo_check_category' pk=p.pk slug=category.slug %}{% endif %}">
-                            {% csrf_token %}
-                                <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
-                                    {% if p.complete %}
-                                        <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
-                                    {% else %}
-                                        <img src="{% static 'img/home_incom.png' %}" alt="InComplete" id="todoIconInCom"/>
-                                    {% endif %}
-                                </button>
-                                <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:8 }}</a>
-                                <div id="todoDeadline">
-                                    {% if p.complete == False %}
-                                        {% if p.deadline|timeuntil|first == '0' %}
-                                            (over {{ p.deadline|timesince }})
-                                        {% else %}
-                                            ({{ p.deadline|timeuntil }})
-                                        {% endif %}
-                                    {% else %}
-                                        <span style="color: #17DC1F;">(Done)</span>
-                                    {% endif %}
-                                </div>
-                        </form>
+                    <form class="todo" style="margin-bottom:10px" method="post" action="{% url 'home:todo_check' pk=p.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" id="checkBtn" style="border: none; background: none; width: 40px; cursor: pointer; margin-right: 20px;">
+                            {% if p.complete %}
+                            <img src="{% static 'img/home_complete.png' %}" alt="Complete" id="todoIconCom"/>
+                            {% else %}
+                            <img src="{% static 'img/home_incom.png' %}" alt="InComplete" id="todoIconInCom"/>
+                            {% endif %}
+                        </button>
+                        <a id="todoTitle" href="{{ p.get_absolute_url }}" style="text-decoration: none; color: #2D3142;">{{ p.title | truncatechars:8 }}</a>
+                        <div id="todoDeadline">
+                            {% if p.complete == False %}
+                                {% if p.deadline|timeuntil|first == '0' %}
+                                    (over {{ p.deadline|timesince }})
+                                {% else %}
+                                    ({{ p.deadline|timeuntil }})
+                                {% endif %}
+                                {% else %}
+                                    <span style="color: #17DC1F;">(Done)</span>
+                            {% endif %}
+                        </div>
+                    </form>
                     {% endfor %}
-
                 {% else %}
                 <div class="empty">
                     <div id="des">
@@ -92,5 +82,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}

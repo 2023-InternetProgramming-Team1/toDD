@@ -19,18 +19,19 @@
     {% for activity in lecture.activity_set.all %}
       <div class="activity-box">
         <p class="activity-title">{{ activity.title }}</p>
-        <ul>
+        <ul style="list-style-type: none;">
           {% for assignment in activity.assignment_set.all %}
-            <li>과제: {{ assignment.title }}</li>
+          <li><b>과제:</b> {{ assignment.title }}</li>
           {% endfor %}
           {% for quiz in activity.quiz_set.all %}
-            <li>퀴즈: {{ quiz.title }}</li>
+          <li><b>퀴즈:</b> {{ quiz.title }}</li>
           {% endfor %}
         </ul>
         <div class="add-activity">
           <a href="{% url 'activity_detail' activity.id %}" class="btn btn-success">+ 활동 추가</a>
         </div>
       </div>
+    <hr>
     {% endfor %}
   </div>
 </div>
