@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+/* static/css/custom.css */
+
+.custom-signup-form {
+    background-color: #fffff4;
+    padding: 20px;
+    border-radius: 10px;
+
+.main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #FFFFF4;
+        }
+        .registration-box{  /*노란색 박스*/
+            flex: 1;
+            background-color: #FFEC9D;
+            width: auto;
+            height: auto;
+            flex-shrink: 0;
+            border-radius: 50px;
+            margin-top:20px;
+        }
+        .r-group {
+            text-align: center;
+            margin-top:20px;
+            margin-bottom:20px;
+
+        }
+        .registration-image {
+            width: 160px;
+            height: 160px;
+            flex-shrink: 0;
+
+            margin-left: 20px;
+            padding:20px;
+            background-color: #FFFFF4;
+        }
+        label {
+            width: 553px;
+            height: 65px;
+            flex-shrink: 0;
+            color: #2D3142;
+            font-family: Inter;
+            font-size: 20px;
+            text-align: left;
+            margin-top:10px;
+
+            color: #000;
+            font-family: Inter;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+        input {
+            width: 500px;
+            height: 50px;
+            flex-shrink: 0;
+            border-radius: 100px;
+            background: #FFFFF4;
+            border:none;
+            color: #778080;
+            margin-bottom:20px;
+
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+        #submitButton {
+            margin-left: 20px;
+            margin-right:90px;
+            margin-top:450px;
+
+        }
+        .g-dot{
+            width:15px;
+            height:15px;
+            margin-right:30px;
+        }
+            #submitButton img {
+            flex-shrink:0;
+            height:50px;
+            width: 50px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+}
