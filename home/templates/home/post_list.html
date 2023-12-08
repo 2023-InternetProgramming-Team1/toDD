@@ -1,6 +1,23 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block main_area %}
+
+{% if "e-class 카테고리에서 중복되는 게시물이 존재합니다." in messages %}
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="messageModalLabel">알림</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div id="messageContent">{{ messages }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 <div class="row mx-5">
     <div class="col-4 mt-3 mb-5">
         <div id="title" style="font-size: 50px">
@@ -101,4 +118,20 @@
              window.open("/home/popup","팝업 이름","width=300,height=300, left=300, top=300");
 
     </script>
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+
+          var messages = "{{ messages }}";
+          if (messages) {
+              document.getElementById('messageContent').innerHTML = messages;
+              messageModal.show();
+      }
+
+      var closeButton = document.querySelector('#messageModal .btn-close');
+          closeButton.addEventListener('click', function() {
+              messageModal.hide();
+          });
+      });
+</script>
 {% endblock %}
