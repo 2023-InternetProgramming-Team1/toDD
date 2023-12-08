@@ -91,7 +91,7 @@ def todo_check(request, pk):
     todo.complete = not todo.complete
     todo.save()
 
-    # 현재 complete한 todo의 날짜로 stored_date를 초기화
+    # 현재 complete한 todo의 데드라인 날짜로 stored_date를 초기화
     stored_date = todo.deadline.date().strftime('%Y-%m-%d')
     request.session['stored_date'] = stored_date
     print("Updated stored_date:", request.session['stored_date'])
@@ -178,10 +178,13 @@ class PostList(ListView):
         today_formatted = DateFormat(current_date).format('Y.m.d')
         context['today'] = today_formatted + ' (' + dateDict[current_date.weekday()] + ')'
 
+        # 날짜 저장
         self.request.session['stored_date'] = current_date.strftime('%Y-%m-%d')
 
+        # 작성자와 사용자가 같은 포스트, 데드 라인과 현재 날짜가 같은 포스트 불러오기 (홈에서는 무조건 현재 날짜)
         context['post_list_today'] = Post.objects.filter(deadline__date=current_date, author=self.request.user)
 
+        # 카테고리 사용자 별로 포스트 세기
         all_categories = Category.objects.all()
 
         categories_post_counts = {}
@@ -201,6 +204,8 @@ def change_date(request, **kwargs):
     # 현재 날짜
     current_date = timezone.now().date()
 
+    # 이전 버튼이 눌리면 날짜 하루 전으로, 다음 버튼이 눌리면 다음 날짜로 가기
+    # 버튼이 눌리지 않았다면 현재 날짜 표시하기
     if 'prev' in request.GET:
         stored_date = timezone.datetime.strptime(stored_date_str, '%Y-%m-%d').date() - timedelta(days=1)
         request.session['stored_date'] = stored_date.strftime('%Y-%m-%d')
@@ -223,6 +228,7 @@ def change_date(request, **kwargs):
     today_formatted = DateFormat(stored_date).format('Y.m.d')
     today = today_formatted + ' (' + dateDict[stored_date.weekday()] + ')'
 
+    # 날짜 저장
     post_list_today = Post.objects.filter(deadline__date=stored_date, author=request.user)
 
     # 카테고리
