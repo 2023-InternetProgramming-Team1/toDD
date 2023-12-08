@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .forms import PostForm
@@ -38,23 +39,26 @@ def category_page(request, slug):
     quiz = Quiz.objects.all()
     category = get_object_or_404(Category, slug='e_class')
 
-    for other in assignment:
-        Post.objects.get_or_create(
-            title=str('[' + other.activity.lecture.name + ']') + other.title,
-            content=other.content,
-            deadline=other.due_date,
-            category=category,
-            author=request.user,
-        )
+    try:
+        for other in assignment:
+            Post.objects.get_or_create(
+                title=str('[' + other.activity.lecture.name + ']') + other.title,
+                content=other.content,
+                deadline=other.due_date,
+                category=category,
+                author=request.user,
+            )
 
-    for other in quiz:
-        Post.objects.get_or_create(
-            title=str('[' + other.activity.lecture.name + ']') + other.title,
-            content=other.questions,
-            deadline=other.due_date,
-            category=category,
-            author=request.user,
-        )
+        for other in quiz:
+            Post.objects.get_or_create(
+                title=str('[' + other.activity.lecture.name + ']') + other.title,
+                content=other.questions,
+                deadline=other.due_date,
+                category=category,
+                author=request.user,
+            )
+    except Post.MultipleObjectsReturned:
+        pass
 
     if slug == 'no_category':
         category = '미분류'
@@ -142,23 +146,27 @@ class PostList(ListView):
 
         category = get_object_or_404(Category, slug='e_class')
 
-        for other in assignment:
-            Post.objects.get_or_create(
-                title=str('[' + other.activity.lecture.name + ']') + other.title,
-                content=other.content,
-                deadline=other.due_date,
-                category=category,
-                author=self.request.user,
-            )
+        try:
+            for other in assignment:
+                Post.objects.get_or_create(
+                    title=str('[' + other.activity.lecture.name + ']') + other.title,
+                    content=other.content,
+                    deadline=other.due_date,
+                    category=category,
+                    author=self.request.user,
+                )
 
-        for other in quiz:
-            Post.objects.get_or_create(
-                title=str('[' + other.activity.lecture.name + ']') + other.title,
-                content=other.questions,
-                deadline=other.due_date,
-                category=category,
-                author=self.request.user,
-            )
+            for other in quiz:
+                Post.objects.get_or_create(
+                    title=str('[' + other.activity.lecture.name + ']') + other.title,
+                    content=other.questions,
+                    deadline=other.due_date,
+                    category=category,
+                    author=self.request.user,
+                )
+        except Post.MultipleObjectsReturned:
+            messages.warning(self.request, 'warning')
+            context['messages'] = 'e-class 카테고리에서 중복되는 게시물이 존재합니다.'
 
         # 현재 날짜
         current_date = timezone.now().date()
