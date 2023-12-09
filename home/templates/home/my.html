@@ -166,7 +166,7 @@
         <div class="text">
             <hr>
             {% if tuesday_posts.exists %}
-            {% for post in monday_posts %}
+            {% for post in tuesday_posts %}
             <a href="{{ post.get_absolute_url }}" style="color: #2D3142;">{{ post.title }}</a>
             <br>
             {% endfor %}

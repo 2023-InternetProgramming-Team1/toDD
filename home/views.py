@@ -338,7 +338,7 @@ def my(request):
     tuesday_date = timezone.make_aware(timezone.datetime.strptime(tuesday, '%Y-%m-%d')).date()
     wednesday_date = timezone.make_aware(timezone.datetime.strptime(wednesday, '%Y-%m-%d')).date()
     thursday_date = timezone.make_aware(timezone.datetime.strptime(thursday, '%Y-%m-%d')).date()
-    friday_date = timezone.make_aware(timezone.datetime.strptime(tuesday, '%Y-%m-%d')).date()
+    friday_date = timezone.make_aware(timezone.datetime.strptime(friday, '%Y-%m-%d')).date()
     saturday_date = timezone.make_aware(timezone.datetime.strptime(saturday, '%Y-%m-%d')).date()
     sunday_date = timezone.make_aware(timezone.datetime.strptime(sunday, '%Y-%m-%d')).date()
 
